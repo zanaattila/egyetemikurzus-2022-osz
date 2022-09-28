@@ -16,6 +16,12 @@
 * legyen benne generikus kollekció (pl.: `List<T>`, `Stack<T>`, stb...)
 * legyen benne aszinkron rész (`async` és `Task`)
 
+## Technikai követelmények
+
+* .NET 6
+* Konzolos alkalmazás
+
+
 ## Értékelés
 
 Az értékelés utolsó órán védéssel fog zárulni.
@@ -33,9 +39,10 @@ Az értékelés utolsó órán védéssel fog zárulni.
 ## Beadás menete
 
 1. Regisztrálsz github-ra, ha még nem tetted volna meg.
-2. Ezen repó fork gombjával készítesz egy fork-ot erről a repóról
-3. A forkot lokálisan checkout, csinálsz egy mappát, ami a kódod tartalmazza. A mappa neve a neptun kódod legyen. Ha ketten dolgoztok, akkor a kettőtök neve `_` karakterrel elválasztva.
-4. Elkészítitek a beadandót, folyamatos commitokkal
+2. Ezen repó fork gombjával készítesz egy fork-ot erről a repóról.
+3. A forkot repót checkoutolod, csinálsz egy mappát, ami a kódod tartalmazza. A mappa neve a neptun kódod legyen. Ha ketten dolgoztok, akkor a kettőtök neve `_` karakterrel elválasztva.
+4. A `hazifeladatok.sln`-be vedd fel a projektedet, így a CI-CD futni fog rá.
+4. Elkészítitek a beadandót, folyamatos commitokkal.
 5. A végén, amikor be akarjátok adni, akkor készítetek egy pull request-et erre a repóra.
 
 ## Ajánlott olvasmányok
