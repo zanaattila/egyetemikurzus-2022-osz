@@ -1,4 +1,4 @@
-# SZTE egyetemi kurzus házi feleadat & Órai munka repó
+# SZTE egyetemi kurzus, 2022 őszi félév házi feleadat & Órai munka repó
 
 ## Követelmények
 
