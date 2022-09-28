@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ora02", "Ora02\Ora02.csproj", "{7A3BC9F7-8B6B-429B-9DF4-CE14164F5924}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4AE00076-C4E6-4DE5-9970-BAF3A9C558C1}"
+	ProjectSection(SolutionItems) = preProject
+		Jegyzet.txt = Jegyzet.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ora03", "Ora03\Ora03.csproj", "{DE926E1F-AA4D-4351-87D3-C7438439E315}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A3BC9F7-8B6B-429B-9DF4-CE14164F5924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3BC9F7-8B6B-429B-9DF4-CE14164F5924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3BC9F7-8B6B-429B-9DF4-CE14164F5924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A3BC9F7-8B6B-429B-9DF4-CE14164F5924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE926E1F-AA4D-4351-87D3-C7438439E315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE926E1F-AA4D-4351-87D3-C7438439E315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE926E1F-AA4D-4351-87D3-C7438439E315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE926E1F-AA4D-4351-87D3-C7438439E315}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {620D6E41-E7D5-45D6-934B-C2C1F367BE6A}
+	EndGlobalSection
+EndGlobal
