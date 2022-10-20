@@ -15,7 +15,7 @@ while (true)
 {
     Console.Write("Type command: ");
     string? command = Console.ReadLine();
-    if (!string.IsNullOrEmpty(command) 
+    if (!string.IsNullOrEmpty(command)
         && loader.Commands.ContainsKey(command))
     {
         loader.Commands[command].Execute();

@@ -8,4 +8,12 @@
     <AssemblyVersion>0.1</AssemblyVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Oktatas\egyetemikurzus-2022-osz\Orai\Reflection\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\Oktatas\egyetemikurzus-2022-osz\Orai\Reflection\.editorconfig" />
+  </ItemGroup>
+
 </Project>
