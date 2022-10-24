@@ -11,17 +11,24 @@ string GetVersion()
 
 var loader = new CommandLoader();
 
-while (true)
+try
 {
-    Console.Write("Type command: ");
-    string? command = Console.ReadLine();
-    if (!string.IsNullOrEmpty(command)
-        && loader.Commands.ContainsKey(command))
+    while (true)
     {
-        loader.Commands[command].Execute();
+        Console.Write("Type command: ");
+        string? command = Console.ReadLine();
+        if (!string.IsNullOrEmpty(command)
+            && loader.Commands.ContainsKey(command))
+        {
+            loader.Commands[command].Execute();
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong");
+        }
     }
-    else
-    {
-        Console.WriteLine("Something went wrong");
-    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Hiba: {ex.Message}");
 }

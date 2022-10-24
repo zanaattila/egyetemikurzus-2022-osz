@@ -4,7 +4,7 @@
     {
         public string Name => "Exit";
 
-        public void Execute()
+        public void Execute() 
         {
             Environment.Exit(0);
         }
