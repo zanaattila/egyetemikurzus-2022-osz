@@ -1,3 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using D5BF9U;
 
-Console.WriteLine("am i running!");
+await Game.GameOn();
