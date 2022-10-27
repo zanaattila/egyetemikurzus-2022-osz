@@ -1,34 +1,42 @@
 ﻿using Reflection;
 using System.Reflection;
 
-Console.WriteLine($"Awesome C# Shell {GetVersion()} BETA!");
-
-string GetVersion()
+internal class Program
 {
-    AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
-    return assemblyName.Version?.ToString() ?? "unknown version";
-}
-
-var loader = new CommandLoader();
-
-try
-{
-    while (true)
+    private static async Task Main(string[] args)
     {
-        Console.Write("Type command: ");
-        string? command = Console.ReadLine();
-        if (!string.IsNullOrEmpty(command)
-            && loader.Commands.ContainsKey(command))
+        Console.WriteLine($"Awesome C# Shell {GetVersion()} BETA!");
+
+        string GetVersion()
         {
-            loader.Commands[command].Execute();
+            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
+            return assemblyName.Version?.ToString() ?? "unknown version";
         }
-        else
+
+        var loader = new CommandLoader();
+
+        try
         {
-            Console.WriteLine("Something went wrong");
+            while (true)
+            {
+                Console.Write("Type command: ");
+                string? command = Console.ReadLine();
+                if (!string.IsNullOrEmpty(command)
+                    && loader.Commands.ContainsKey(command))
+                {
+                    loader.Commands[command].Execute();
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong");
+                }
+            }
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Hiba: {ex.Message}");
+        }
+
+        await Task.Delay(1000);
     }
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Hiba: {ex.Message}");
 }
