@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZCSVParser.Types;
 
 namespace ZCSVParser.Validator
 {
     public sealed class FileValidator : IValidator
     {
-        public bool Validate(string validatable)
+        private readonly ValidatableFile _file;
+        public FileValidator(string path)
         {
-            throw new NotImplementedException();
+            _file = new ValidatableFile(path);
         }
-
-        public bool Validate(IEnumerable<string> validatables)
+        public bool Validate()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Validate(string[] validatables)
-        {
-            throw new NotImplementedException();
+            
         }
     }
 }

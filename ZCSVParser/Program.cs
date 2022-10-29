@@ -1,4 +1,5 @@
 ﻿using System;
+using ZCSVParser.Validator;
 
 namespace ZCSVParser
 {
@@ -6,6 +7,7 @@ namespace ZCSVParser
     {
         static void Main(string[] args)
         {
+            //PathValidator pv = new PathValidator();
             Console.WriteLine("Hello World!");
         }
     }

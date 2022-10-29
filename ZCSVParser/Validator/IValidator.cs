@@ -8,8 +8,6 @@ namespace ZCSVParser.Validator
 {
     internal interface IValidator
     {
-        bool Validate(string validatable);
-        bool Validate(IEnumerable<string> validatables);
-        bool Validate(string[] validatables);
+        bool Validate();
     }
 }

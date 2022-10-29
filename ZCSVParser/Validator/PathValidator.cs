@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using ZCSVParser.Types;
 
 namespace ZCSVParser.Validator
 {
     public sealed class PathValidator : IValidator
     {
-        public bool Validate(string validatable)
+        private readonly ValidatablePath _path;
+        public PathValidator(string path)
         {
-            throw new NotImplementedException();
+            _path = new ValidatablePath(path);
         }
 
-        public bool Validate(IEnumerable<string> validatables)
+        public bool Validate()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Validate(string[] validatables)
-        {
-            throw new NotImplementedException();
+            if (!Directory.Exists(_path.FolderPath)) {
+                Console.WriteLine($"Nem létezik a {_path.FolderName} az adott útvonallal: {_path.FolderPath}");
+                return false;
+            }
+            return true;
         }
     }
 }
