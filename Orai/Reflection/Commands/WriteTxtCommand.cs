@@ -43,7 +43,7 @@ namespace Reflection.Commands
 
                 await txt.WriteLineAsync("Hello async");
 
-                //Thread vs Process Potected mode
+                //(Thread vs Process) & Potected mode
             }
         }
     }

@@ -15,5 +15,10 @@ namespace Reflection.Objects
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public Data()
+        {
+            Name = string.Empty;
+        }
     }
 }
