@@ -20,8 +20,8 @@ namespace ZCSVParser.Validator
 
         public bool Validate()
         {
-            if (!Directory.Exists(_path.FolderPath)) {
-                Console.WriteLine($"Nem létezik a {_path.FolderName} az adott útvonallal: {_path.FolderPath}");
+            if (!Directory.Exists(_path.FullPath)) {
+                Console.WriteLine($"Nem létezik a {_path.FolderPath} az adott útvonallal: {_path.FullPath}");
                 return false;
             }
             return true;

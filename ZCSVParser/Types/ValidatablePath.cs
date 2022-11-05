@@ -9,12 +9,14 @@ namespace ZCSVParser.Types
 {
     public class ValidatablePath
     {
-        public string FolderName { get; }
         public string FolderPath { get; }
+        public string FullPath { get; }
+        public string FileName { get; }
         public ValidatablePath(string path)
         {
-            FolderName = Path.GetDirectoryName(path);
-            FolderPath = path;
+            FolderPath = Path.GetDirectoryName(path);
+            FullPath = path;
+            FileName = Path.GetFileName(path);
         }
     }
 }
