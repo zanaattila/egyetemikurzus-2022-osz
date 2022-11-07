@@ -11,16 +11,16 @@ public sealed class MyLoader
             .Start("[mediumvioletred]loading deviancy[/]", ctx => 
             {
                 Globals.Globals.MySwitch = 0;
+                //todo later when saves or unlocks are done, implement the chapter system too, along with the library
                 
-                
-                
-                Thread.Sleep(1000);
+                //todo for faster production ima reduce these to tenth of a value, 
+                Thread.Sleep(100);
                 AnsiConsole.MarkupLine("are you sure you want to play this?");
-                Thread.Sleep(2000);
+                Thread.Sleep(200);
                 AnsiConsole.MarkupLine("It contains [red]18+[/] elements");
-                Thread.Sleep(2000);
+                Thread.Sleep(200);
                 AnsiConsole.MarkupLine("yes, even tho its just some ascii stuff");
-                Thread.Sleep(2000);
+                Thread.Sleep(200);
 
             });
 
@@ -35,8 +35,8 @@ public sealed class MyLoader
         {
             AnsiConsole.MarkupLine("[magenta]as you wish[/]");
             Thread.Sleep(1500);
-            AnsiConsole.MarkupLine("[magenta]then please, enter, cum in[/]");
-
+            AnsiConsole.MarkupLine("[magenta]then please, cum in[/]");
+            Thread.Sleep(3000);
         }
         else
         {
@@ -52,13 +52,11 @@ public sealed class MyLoader
     public static int LoadLevel_0()
     {
         Console.Clear();
-        string choice_color = "[mediumvioletred]";
-        string end_tag = "[/]";
 
         var selected = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title("[salmon1]Welcome to the game Cretin![/]")
-                .PageSize(5)
+                .PageSize(10)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
                 .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
                 .AddChoices(new[]

@@ -206,7 +206,7 @@ public sealed class Game
         {
             while (Globals.Globals.MySwitch!=-1)
             {
-                MyEventHandler.HandleMe(Console.ReadKey().Key);
+                MyEventHandler.HandleMe();
             }
         });
         Console.WriteLine("goodbye, thank you for playing");

@@ -4,7 +4,45 @@ namespace D5BF9U.Handlers;
 
 public sealed class LevelHandler
 {
-    public static void Level_0(ConsoleKey consoleKey)
+    public static void Level_1()
+    {
+        //cinematic of pre
+        Level_1_Cinematic_1();
+        //fight
+        Level_1_Fight();
+        //win or lose
+        Level_1_Win();
+        Level_1_Lose();
+        //post cinematic
+        Level_1_Cinematic_2();
+    }
+
+    public static void Level_1_Fight()
+    {
+        
+    }
+    public static void Level_1_Cinematic_1()
+    {
+        
+    }
+
+
+    public static void Level_1_Win()
+    {
+        
+    }
+
+    public static void Level_1_Lose()
+    {
+        
+    }
+
+    public static void Level_1_Cinematic_2()
+    {
+        
+    }
+
+    public static void Level_0()
     {
         bool amikeeping = true;
         while (amikeeping)
