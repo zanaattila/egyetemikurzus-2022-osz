@@ -8,14 +8,21 @@ public sealed class MyEventHandler
         //and i can reach its method everywhere just like a proper class. Maybe this is where i make libs?
         switch (Globals.Globals.MySwitch)
         {
-                
             case 0:
             {
                 LevelHandler.Level_0(consoleKey);
                 break;
             }
+            case 1:
+            {
+                break;
+            }
+            case 2:
+            {
+                break;
+            }
         }
         
-        Console.WriteLine($"pressed {consoleKey}");
+       // Console.WriteLine($"pressed {consoleKey}");
     }
 }

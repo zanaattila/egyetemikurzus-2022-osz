@@ -209,9 +209,6 @@ public sealed class Game
                 MyEventHandler.HandleMe(Console.ReadKey().Key);
             }
         });
-        /*for (int i = 0; i < 1000000; i++)
-        {
-            Console.WriteLine(i);
-        }*/
+        Console.WriteLine("goodbye, thank you for playing");
     }
 }
