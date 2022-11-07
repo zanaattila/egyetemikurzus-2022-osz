@@ -1,18 +1,30 @@
 using System.Collections.Concurrent;
+using D5BF9U.Handlers;
 using Spectre.Console;
 using Spectre.Console.Rendering;
+
 
 namespace D5BF9U;
 
 public sealed class Game
 {
-    class MyClass :IRenderable
+    
+    #region tmp
+    
+    
+    
+    /*
+    public class MyClass :IRenderable
     {
         
         public string meine;
+        public ConcurrentQueue<int> outwithme = new ConcurrentQueue<int>();
+        
+        
 
         public MyClass()
         {
+            outwithme.Enqueue(88888888);
             meine = "Leftie";
         }
 
@@ -28,22 +40,65 @@ public sealed class Game
     }
 
 
-    public static async Task Teszme()
+    public static async Task Teszme(MyClass addme)
     {
         await Task.Run(() =>
         {
+            for (int i = 500000000; i < 1000000000; i += 20)
+            {
+                addme.outwithme.Enqueue(i);
+            }
             
         });
 
     }
-    public static async Task GameOn()
+    
+    public static async Task Teszme2(MyClass addme)
     {
+        await Task.Run(() =>
+        {
+            for (int i = 0; i < 100000000; i += 3)
+            {
+                addme.outwithme.Enqueue(i);
+            }
+            
+        });
+
+    }
+
+    public static async Task OLD_Teszting()
+    {
+        MyClass csacsi = new MyClass();
+        /*ConcurrentQueue<int> outwithme = new ConcurrentQueue<int>();
+        
+        outwithme.Enqueue(88888888);#1#
+        var tusk1 = Teszme(csacsi);
+        var tusk2 = Teszme2(csacsi);
+        int tmp = 0;
+        var task3 = Task.Run(() =>
+        {
+            while (!csacsi.outwithme.IsEmpty)
+            {
+                csacsi.outwithme.TryDequeue(out tmp);
+                Console.WriteLine($"reading enque {tmp}");
+                
+            }
+        });
+        Task.WaitAll(tusk1, tusk2, task3);
+        Table nuncsaku = new Table();
+        nuncsaku.AddColumns(csacsi.outwithme.TryDequeue(out tmp).ToString());
+
+        AnsiConsole.Live(nuncsaku).Start(ui =>
+        {
+            
+        });
+
+
         /*for (int i = 0; i < 250000; i++)
         {
             Console.WriteLine(i);
-        }*/
+        }#1#
 
-        MyClass csacsi = new MyClass();
         Console.WriteLine("im running, making main 1 line");
         Table valami = new Table();
         Table valami2 = new Table();
@@ -53,7 +108,7 @@ public sealed class Game
         ConcurrentDictionary<int,int> mydict = new ConcurrentDictionary<int, int>();
         //todo, fontos, optimalizálásnak
         /*int i = i++;  //ez lassabb
-        ++i;*/ //ez gyorsabb, ez elemi művelet
+        ++i;#1# //ez gyorsabb, ez elemi művelet
 
 
         foreach (var szam in GudSzamok)
@@ -137,5 +192,26 @@ public sealed class Game
         
         
         Console.WriteLine();
+    }*/
+    
+    #endregion
+    
+    
+    
+    public static async Task GameOn()
+    {
+        MyLoader.FirstLoad();
+
+        await Task.Run(() =>
+        {
+            while (Globals.Globals.MySwitch!=-1)
+            {
+                MyEventHandler.HandleMe(Console.ReadKey().Key);
+            }
+        });
+        /*for (int i = 0; i < 1000000; i++)
+        {
+            Console.WriteLine(i);
+        }*/
     }
 }
