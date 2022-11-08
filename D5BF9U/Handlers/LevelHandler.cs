@@ -23,7 +23,7 @@ public sealed class LevelHandler
     }
     public static void Level_1_Cinematic_1()
     {
-        
+        Console.Clear();
     }
 
 
@@ -42,12 +42,47 @@ public sealed class LevelHandler
         
     }
 
+    public static int Level_0_MainMenu()
+    {
+        Console.Clear();
+
+        var selected = AnsiConsole.Prompt(
+            new SelectionPrompt<string>()
+                .Title("[salmon1]Welcome to the game of Deviants![/]")
+                .PageSize(10)
+                .HighlightStyle(new Style().Foreground(Color.Orange1))
+                .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
+                .AddChoices(new[]
+                {
+                    "[mediumvioletred]Start New Game[/]", "[mediumvioletred]Chapter Select[/]",
+                    "[mediumvioletred]Library[/]", "[mediumvioletred]Exit[/]" 
+                }));
+
+        switch (selected)
+        {// i should use a better approach, but its good for now, atleast will have something to refactor later
+            case "[mediumvioletred]Start New Game[/]":
+                Globals.Globals.MySwitch = 1;
+                return 0;
+            case "[mediumvioletred]Chapter Select[/]":
+                return 1;
+            case "[mediumvioletred]Library[/]":
+                return 2;
+            case "[mediumvioletred]Exit[/]":
+                Globals.Globals.MySwitch = -1;
+                return -1;
+            default:
+                return 420;
+        }
+
+        
+    }
+    
     public static void Level_0()
     {
         bool amikeeping = true;
         while (amikeeping)
         {
-            switch (MyLoader.LoadLevel_0())
+            switch (Level_0_MainMenu())
             {
                 case 0:
                 {
@@ -81,6 +116,8 @@ public sealed class LevelHandler
         }
     }
 
+    
+    
     public static int Level_0_chapter_select()
     {
         Console.Clear();
@@ -89,7 +126,7 @@ public sealed class LevelHandler
 
         var selected = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-                .Title("[salmon1]Welcome to the game Cretin![/]")
+                .Title("[salmon1]Welcome to the game of Deviants![/]")
                 .PageSize(5)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
                 .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything

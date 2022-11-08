@@ -49,38 +49,5 @@ public sealed class MyLoader
     }
 
     
-    public static int LoadLevel_0()
-    {
-        Console.Clear();
-
-        var selected = AnsiConsole.Prompt(
-            new SelectionPrompt<string>()
-                .Title("[salmon1]Welcome to the game Cretin![/]")
-                .PageSize(10)
-                .HighlightStyle(new Style().Foreground(Color.Orange1))
-                .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
-                .AddChoices(new[]
-                {
-                    "[mediumvioletred]Start New Game[/]", "[mediumvioletred]Chapter Select[/]",
-                    "[mediumvioletred]Library[/]", "[mediumvioletred]Exit[/]" 
-                }));
-
-        switch (selected)
-        {// i should use a better approach, but its good for now, atleast will have something to refactor later
-            case "[mediumvioletred]Start New Game[/]":
-                Globals.Globals.MySwitch = 1;
-                return 0;
-            case "[mediumvioletred]Chapter Select[/]":
-                return 1;
-            case "[mediumvioletred]Library[/]":
-                return 2;
-            case "[mediumvioletred]Exit[/]":
-                Globals.Globals.MySwitch = -1;
-                return -1;
-            default:
-                return 420;
-        }
-
-        
-    }
+    
 }
