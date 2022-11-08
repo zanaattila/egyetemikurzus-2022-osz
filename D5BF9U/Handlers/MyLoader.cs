@@ -21,17 +21,16 @@ public sealed class MyLoader
                 Thread.Sleep(200);
                 AnsiConsole.MarkupLine("yes, even tho its just some ascii stuff");
                 Thread.Sleep(200);
-
             });
 
         var answer = AnsiConsole.Prompt(new TextPrompt<string>("are you really want to run this game?")
             .ChoicesStyle(new Style().Foreground(Color.Orange1))
             .AddChoices(new[]
             {
-                "mhmmm", "nah im good", "sure", "oh hell no!"
+                "mhmm", "nah im good", "sure", "oh hell no!"
             }));
         
-        if (answer.Equals("mhmmm")|| answer.Equals("sure"))
+        if (answer.Equals("mhmm")|| answer.Equals("sure"))
         {
             AnsiConsole.MarkupLine("[magenta]as you wish[/]");
             Thread.Sleep(1500);
