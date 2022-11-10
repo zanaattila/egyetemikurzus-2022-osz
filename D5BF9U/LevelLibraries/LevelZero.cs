@@ -13,7 +13,7 @@ public sealed class LevelZero
         UIOperator.DestroyBuffer();
         Console.Clear();
         string choiceColor = "[mediumvioletred]";
-        string titleColor = "[salmon]";
+        string titleColor = "[salmon1]";
         string endTag = "[/]";
 
         var selected = AnsiConsole.Prompt(
@@ -30,14 +30,14 @@ public sealed class LevelZero
 
         switch (ColoredStringDemolisher(choiceColor,selected,endTag))
         {// i should use a better approach, but its good for now, atleast will have something to refactor later
-            case "[mediumvioletred]Start New Game[/]":
+            case "Start New Game":
                 Globals.Globals.MySwitch = 1;
                 return 0;
-            case "[mediumvioletred]Chapter Select[/]":
+            case "Chapter Select":
                 return 1;
-            case "[mediumvioletred]Library[/]":
+            case "Library":
                 return 2;
-            case "[mediumvioletred]Exit[/]":
+            case "Exit":
                 Globals.Globals.MySwitch = -1;
                 return -1;
             default:
@@ -69,7 +69,7 @@ public sealed class LevelZero
         
 
         string choiceColor = "[mediumvioletred]";
-        string titleColor = "[salmon]";
+        string titleColor = "[salmon1]";
         string endTag = "[/]";
         
 
