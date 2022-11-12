@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using D5BF9U.Enums;
+using D5BF9U.Globals;
 using Spectre.Console;
 
 namespace D5BF9U.Handlers;
@@ -36,6 +38,7 @@ public sealed class MyLoader
             Thread.Sleep(1500);
             AnsiConsole.MarkupLine("[magenta]then please, cum in[/]");
             Thread.Sleep(3000);
+            Globals.Globals.MySwitch = LevelAdjustingSwitch.MainMenu;
         }
         else
         {
@@ -43,7 +46,7 @@ public sealed class MyLoader
             Thread.Sleep(900);
             AnsiConsole.MarkupLine("have a nice day");
             Thread.Sleep(1300);
-            Globals.Globals.MySwitch = -1;
+            Globals.Globals.MySwitch = LevelAdjustingSwitch.Exit;
         }
     }
 

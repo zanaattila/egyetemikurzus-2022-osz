@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+using D5BF9U.Containers;
+using D5BF9U.Enums;
 using D5BF9U.LevelLibraries;
 using Spectre.Console;
 
@@ -22,38 +24,37 @@ public sealed class LevelHandler
     
     public static void Level_0()
     {
-        bool amikeeping = true;
-        while (amikeeping)
+        MainMenuOptionsContainer localSwitch = new MainMenuOptionsContainer();
+        while (true)
         {
-            switch (LevelZero.Level_0_MainMenu())
+            switch ( localSwitch.SelectedOption)
             {
-                case 0:
+                case MainMenuOptions.MainMenu:
+                {
+                    LevelZero.Level_0_MainMenu(localSwitch);
+                    break;
+                }
+                case MainMenuOptions.StartNewGame:
                 {
                     return;
                 }
-                case 1:
+                case MainMenuOptions.ChapterSelect:
                 {
-                    switch (LevelZero.Level_0_chapter_select())
-                    {
-                        case 0:
-                        {
-                            break;
-                        }
-                    }
-                
-                    break; //todo, when ill get home i should check spectre cos i might gonna use a tree sheet or something alike.
+                    LevelZero.Level_0_chapter_select(localSwitch);
+                    break;
                 }
-                case 2:
+                case MainMenuOptions.Library:
                 {
-                    return; //todo this will be the skills list
+                    
+                    break; //todo this will be the skills list
                 }
-                case -1:
+                case MainMenuOptions.Exit:
                 {
                     return; //end
                 }
-                case 420:
+                default:
                 {
-                    throw new Exception("Something went bonkers");
+                    throw new Exception("Level handler has unexpected case.");
                 }
             }
         }

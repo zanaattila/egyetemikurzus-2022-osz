@@ -1,4 +1,6 @@
 using System.Collections.Concurrent;
+using D5BF9U.Enums;
+using D5BF9U.Globals;
 using D5BF9U.Handlers;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -204,7 +206,7 @@ public sealed class Game
 
         await Task.Run(() =>
         {
-            while (Globals.Globals.MySwitch!=-1)
+            while (Globals.Globals.MySwitch!= LevelAdjustingSwitch.Exit)
             {
                 MyEventHandler.HandleMe();
             }

@@ -2,8 +2,8 @@ namespace D5BF9U.Handlers;
 
 public sealed class MainMenuHandler
 {
-    public static string retme(string trimMe)
+    public static void HandleMainMenu()
     {
-        return "i might not even need it";
+        
     }
 }

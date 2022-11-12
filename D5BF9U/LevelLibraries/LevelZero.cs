@@ -1,14 +1,17 @@
 using System.Text;
+using D5BF9U.Containers;
+using D5BF9U.Enums;
+using D5BF9U.Globals;
 using D5BF9U.Handlers;
 using Spectre.Console;
+
 
 namespace D5BF9U.LevelLibraries;
 
 public sealed class LevelZero
 {
     
-    
-    public static int Level_0_MainMenu()
+    public static void Level_0_MainMenu(MainMenuOptionsContainer optionsContainer)
     {
         UIOperator.DestroyBuffer();
         Console.Clear();
@@ -31,17 +34,21 @@ public sealed class LevelZero
         switch (ColoredStringDemolisher(choiceColor,selected,endTag))
         {// i should use a better approach, but its good for now, atleast will have something to refactor later
             case "Start New Game":
-                Globals.Globals.MySwitch = 1;
-                return 0;
+                Globals.Globals.MySwitch = LevelAdjustingSwitch.LevelOne;
+                optionsContainer.SelectedOption = MainMenuOptions.MainMenu;
+                break;
             case "Chapter Select":
-                return 1;
+                optionsContainer.SelectedOption = MainMenuOptions.ChapterSelect;
+                break;
             case "Library":
-                return 2;
+                optionsContainer.SelectedOption = MainMenuOptions.Library;
+                break;
             case "Exit":
-                Globals.Globals.MySwitch = -1;
-                return -1;
+                Globals.Globals.MySwitch = LevelAdjustingSwitch.Exit;
+                optionsContainer.SelectedOption = MainMenuOptions.Exit;
+                break;
             default:
-                return 420;
+                throw new Exception("Unexpected switch case in Level_0_MainMenu");
         }
 
         
@@ -63,7 +70,7 @@ public sealed class LevelZero
         keywordTrimmer.Replace(endTag, "");
         return keywordTrimmer.ToString();
     }
-    public static int Level_0_chapter_select()
+    public static void Level_0_chapter_select(MainMenuOptionsContainer optionsContainer)
     {
         Console.Clear();
         
@@ -91,16 +98,20 @@ public sealed class LevelZero
         switch (ColoredStringDemolisher(choiceColor,selected,endTag))
         {// i should use a better approach, but its good for now, atleast will have something to refactor later //edit, i got it
             case "back":
-                return 0;
+                optionsContainer.SelectedOption = MainMenuOptions.MainMenu;
+                break;
             case "Level One":
-                return 1;
+                optionsContainer.SelectedOption = MainMenuOptions.Level1;
+                break;
             case "Leve Two":
-                return 2;
+                optionsContainer.SelectedOption = MainMenuOptions.Level2;
+                break;
             case "Exit":
-                Globals.Globals.MySwitch = -1;
-                return -1;
+                Globals.Globals.MySwitch = LevelAdjustingSwitch.Exit;
+                optionsContainer.SelectedOption = MainMenuOptions.Exit;
+                break;
             default:
-                return 420;
+                throw new Exception("Unexpected switch case at chapter select");
         }
     }
 }
