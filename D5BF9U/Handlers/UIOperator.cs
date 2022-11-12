@@ -1,16 +1,36 @@
+using System.Text;
+
 namespace D5BF9U.Handlers;
 
-public static class UIOperator
+public sealed class UIOperator
 {
     public static string IntoALine(string [] input)
     {
-        string retme=String.Empty;
+        StringBuilder sb = new StringBuilder();
         foreach (var line in input)
         {
-            retme=String.Concat(retme,line + "\n");
+            sb.Append(line);
         }
-        int tmp = retme.Length-1;
-        return retme.Substring(0,tmp);
+        sb.Length--;
+        return sb.ToString();
+    }
+    
+    public static string ColoredStringBuilder(string color, string choice, string endTag)
+    {
+        StringBuilder concatWithColor = new StringBuilder();
+        concatWithColor.Append(color);
+        concatWithColor.Append(choice);
+        concatWithColor.Append(endTag);
+        return concatWithColor.ToString();
+    }
+
+    public static string ColoredStringDemolisher(string color,string destroyMe, string endTag)
+    {
+        StringBuilder keywordTrimmer = new StringBuilder();
+        keywordTrimmer.Append(destroyMe);
+        keywordTrimmer.Replace(color, "");
+        keywordTrimmer.Replace(endTag, "");
+        return keywordTrimmer.ToString();
     }
     
     

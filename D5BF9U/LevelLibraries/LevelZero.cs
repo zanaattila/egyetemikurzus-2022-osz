@@ -21,17 +21,17 @@ public sealed class LevelZero
 
         var selected = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-                .Title(ColoredStringBuilder(titleColor,"Welcome to the game of Deviants!",endTag))
+                .Title(UIOperator.ColoredStringBuilder(titleColor,"Welcome to the game of Deviants!",endTag))
                 .PageSize(10)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
                 .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
                 .AddChoices(new[]
                 {
-                    ColoredStringBuilder(choiceColor,"Start New Game",endTag), ColoredStringBuilder(choiceColor,"Chapter Select",endTag),
-                    ColoredStringBuilder(choiceColor,"Library",endTag), ColoredStringBuilder(choiceColor,"Exit",endTag)
+                    UIOperator.ColoredStringBuilder(choiceColor,"Start New Game",endTag), UIOperator.ColoredStringBuilder(choiceColor,"Chapter Select",endTag),
+                    UIOperator.ColoredStringBuilder(choiceColor,"Library",endTag), UIOperator.ColoredStringBuilder(choiceColor,"Exit",endTag)
                 }));
 
-        switch (ColoredStringDemolisher(choiceColor,selected,endTag))
+        switch (UIOperator.ColoredStringDemolisher(choiceColor,selected,endTag))
         {// i should use a better approach, but its good for now, atleast will have something to refactor later
             case "Start New Game":
                 Globals.Globals.MySwitch = LevelAdjustingSwitch.LevelOne;
@@ -53,23 +53,7 @@ public sealed class LevelZero
 
         
     }
-    private static string ColoredStringBuilder(string color, string choice, string endTag)
-    {
-        StringBuilder concatWithColor = new StringBuilder();
-        concatWithColor.Append(color);
-        concatWithColor.Append(choice);
-        concatWithColor.Append(endTag);
-        return concatWithColor.ToString();
-    }
-
-    private static string ColoredStringDemolisher(string color,string destroyMe, string endTag)
-    {
-        StringBuilder keywordTrimmer = new StringBuilder();
-        keywordTrimmer.Append(destroyMe);
-        keywordTrimmer.Replace(color, "");
-        keywordTrimmer.Replace(endTag, "");
-        return keywordTrimmer.ToString();
-    }
+    
     public static void Level_0_chapter_select(MainMenuOptionsContainer optionsContainer)
     {
         Console.Clear();
@@ -83,19 +67,19 @@ public sealed class LevelZero
 
         var selected = AnsiConsole.Prompt(
             new SelectionPrompt<string>()
-                .Title(ColoredStringBuilder(titleColor,"Welcome to the game of Deviants!",endTag))
+                .Title(UIOperator.ColoredStringBuilder(titleColor,"Welcome to the game of Deviants!",endTag))
                 .PageSize(5)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
                 .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
                 .AddChoices(new[]
                 {
-                    ColoredStringBuilder(choiceColor,"back",endTag), ColoredStringBuilder(choiceColor,"Level One",endTag),
-                    ColoredStringBuilder(choiceColor,"Level Two",endTag), ColoredStringBuilder(choiceColor,"Exit",endTag) 
+                    UIOperator.ColoredStringBuilder(choiceColor,"back",endTag), UIOperator.ColoredStringBuilder(choiceColor,"Level One",endTag),
+                    UIOperator.ColoredStringBuilder(choiceColor,"Level Two",endTag), UIOperator.ColoredStringBuilder(choiceColor,"Exit",endTag) 
                 }));
 
         
 
-        switch (ColoredStringDemolisher(choiceColor,selected,endTag))
+        switch (UIOperator.ColoredStringDemolisher(choiceColor,selected,endTag))
         {// i should use a better approach, but its good for now, atleast will have something to refactor later //edit, i got it
             case "back":
                 optionsContainer.SelectedOption = MainMenuOptions.MainMenu;
