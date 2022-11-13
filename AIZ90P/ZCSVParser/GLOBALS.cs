@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZCSVParser.DATATYPES.INPUT;
 
 namespace ZCSVParser
 {
@@ -11,6 +12,7 @@ namespace ZCSVParser
         public static string InputPath;
         public static string OutputPath;
         public static List<string> InputFiles;
+        public static List<RendelesInput> filesorok = new();
 
     }
 }
