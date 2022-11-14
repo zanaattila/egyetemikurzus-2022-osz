@@ -91,9 +91,9 @@ namespace ZCSVParser
             {
                 Console.WriteLine("Pontosan kettő paramétert kell megadj: A mappát, ahonnan olvasok, és egy másikat, ahova exportálok.");
                 Help();
-                //Environment.Exit(-2);
+                Environment.Exit(-2);
             }
-            /*if (!PathValidator.CanWorkWithPath(args[0]))
+            if (!PathValidator.CanWorkWithPath(args[0]))
             {
                 Console.WriteLine("Erről az útvonalról nem tudok dolgozni! Kérlek válassz másikat!");
                 Environment.Exit(-1);
@@ -102,8 +102,7 @@ namespace ZCSVParser
             {
                 Console.WriteLine("Erre az útvonalra nem tudok dolgozni! Kérlek válassz másikat!");
                 Environment.Exit(-1);
-            }*/
-            //ReadAndProcessFiles(GLOBALS.InputFiles).Wait();
+            }
             RunFileProcessTasks();
             Console.WriteLine("Halihó!");
         }
