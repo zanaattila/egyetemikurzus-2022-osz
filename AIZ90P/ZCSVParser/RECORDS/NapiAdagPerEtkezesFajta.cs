@@ -4,19 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZCSVParser.DATATYPES.OUTPUT
+namespace ZCSVParser.RECORDS
 {
-    public sealed record class NapiAdagPerFogyasztoKod : IExportable
+    public sealed record class NapiAdagPerEtkezesFajta : IExportable
     {
         public DateOnly Datum { get; init; }
-        public string FogyasztoKod { get; init; }
-
+        public string EtkezesFajta { get; init; }
         public int Adag { get; init; }
 
-        public NapiAdagPerFogyasztoKod(DateOnly datum, string fogyasztoKod, int adag = 0)
+        public NapiAdagPerEtkezesFajta(DateOnly datum, string etkezesFajta, int adag=0)
         {
             Datum = datum;
-            FogyasztoKod = fogyasztoKod;
+            EtkezesFajta = etkezesFajta;
             Adag = adag;
         }
 

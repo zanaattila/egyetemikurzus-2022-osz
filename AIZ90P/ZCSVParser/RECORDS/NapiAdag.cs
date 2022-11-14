@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZCSVParser.DATATYPES;
 
-namespace ZCSVParser.DATATYPES.OUTPUT
+namespace ZCSVParser.RECORDS
 {
-    public sealed record class NapiAdagPerEtkezesFajta : IExportable
+    public sealed record class NapiAdagPerEtkezedFajta : IExportable
     {
         public DateOnly Datum { get; init; }
-        public string EtkezesFajta { get; init; }
         public int Adag { get; init; }
 
-        public NapiAdagPerEtkezesFajta(DateOnly datum, string etkezesFajta, int adag=0)
+        public NapiAdagPerEtkezedFajta(DateOnly datum, int adag = 0)
         {
             Datum = datum;
-            EtkezesFajta = etkezesFajta;
             Adag = adag;
         }
 

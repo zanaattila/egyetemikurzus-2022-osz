@@ -12,7 +12,7 @@ namespace ZCSVParser.VALIDATION
 {
     public static class PathValidator
     {
-        public static bool CanWorkFromPath(string QuestionablePath)
+        public static bool CanWorkWithPath(string QuestionablePath)
         {
             if (!Directory.Exists(QuestionablePath))
             {
@@ -31,7 +31,7 @@ namespace ZCSVParser.VALIDATION
 
             try
             {
-                GLOBALS.InputFiles = (List<string>)Directory.EnumerateFiles(QuestionablePath);
+                GLOBALS.InputFiles = (List<string>)Directory.EnumerateFiles(QuestionablePath,"*.csv");
             }
             catch (Exception e) when (e is IOException || e is PathTooLongException)
             {
