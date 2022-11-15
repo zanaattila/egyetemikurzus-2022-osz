@@ -7,12 +7,12 @@ using ZCSVParser.DATATYPES;
 
 namespace ZCSVParser.RECORDS
 {
-    public sealed record class NapiAdagPerEtkezedFajta : IExportable
+    public sealed record class NapiAdag: IExportable
     {
         public DateOnly Datum { get; init; }
         public int Adag { get; init; }
 
-        public NapiAdagPerEtkezedFajta(DateOnly datum, int adag = 0)
+        public NapiAdag(DateOnly datum, int adag = 0)
         {
             Datum = datum;
             Adag = adag;

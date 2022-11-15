@@ -9,9 +9,9 @@ namespace ZCSVParser.RECORDS
 {
     public static class DataCollector
     {
-        public static List<NapiAdagPerEtkezedFajta> CollectDataForNapiAdag(List<RendelesInput> InputData)
+        public static List<NapiAdag> CollectDataForNapiAdag(List<RendelesInput> InputData)
         {
-            List<NapiAdagPerEtkezedFajta> data = InputData.GroupBy(x => x.Datum).Select(c1 => new NapiAdagPerEtkezedFajta(c1.Key, c1.Sum(c => c.f_adag))).ToList<NapiAdagPerEtkezedFajta>();
+            List<NapiAdag> data = InputData.GroupBy(x => x.Datum).Select(c1 => new NapiAdag(c1.Key, c1.Sum(c => c.f_adag))).ToList<NapiAdag>();
             return data;
         }
 
