@@ -1,36 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ZCSVParser.DATATYPES;
 
 namespace ZCSVParser.RECORDS
 {
-    public sealed record class NapiAdag: IExportable
+    public sealed record class NapiAdag
     {
-        public DateOnly Datum { get; init; }
+        [XmlElement(DataType = "date")]
+        public DateTime Datum { get; init; }
         public int Adag { get; init; }
 
-        public NapiAdag(DateOnly datum, int adag = 0)
+        public NapiAdag(DateTime datum, int adag = 0)
         {
             Datum = datum;
             Adag = adag;
         }
 
-        public void ExportCSV()
+        public NapiAdag()
         {
-            throw new NotImplementedException();
-        }
-
-        public void ExportJSON()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExportXML()
-        {
-            throw new NotImplementedException();
+            Datum = DateTime.MinValue;
+            Adag = 0;
         }
     }
 }

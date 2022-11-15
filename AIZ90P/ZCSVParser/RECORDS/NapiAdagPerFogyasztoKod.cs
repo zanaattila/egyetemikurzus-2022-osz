@@ -1,38 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ZCSVParser.RECORDS
 {
-    public sealed record class NapiAdagPerFogyasztoKod : IExportable
+    public sealed record class NapiAdagPerFogyasztoKod
     {
-        public DateOnly Datum { get; init; }
+        [XmlElement(DataType = "date")]
+        public DateTime Datum { get; init; }
         public string FogyasztoKod { get; init; }
 
         public int Adag { get; init; }
 
-        public NapiAdagPerFogyasztoKod(DateOnly datum, string fogyasztoKod, int adag = 0)
+        public NapiAdagPerFogyasztoKod(DateTime datum, string fogyasztoKod, int adag = 0)
         {
             Datum = datum;
             FogyasztoKod = fogyasztoKod;
             Adag = adag;
         }
 
-        public void ExportCSV()
+        public NapiAdagPerFogyasztoKod()
         {
-            throw new NotImplementedException();
-        }
-
-        public void ExportJSON()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ExportXML()
-        {
-            throw new NotImplementedException();
+            Datum = DateTime.MinValue;
+            FogyasztoKod = null;
+            Adag = 0;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZCSVParser.DATATYPES;
+using ZCSVParser.RECORDS;
 using ZCSVParser.VALIDATION;
 
 namespace ZCSVParser
@@ -70,8 +71,8 @@ namespace ZCSVParser
                 Parallel.ForEach(lines.GetConsumingEnumerable(), parallelOptions, line =>
                 {
                     string[] splittedLine = line.Split(';');
-                    DateOnly datum;
-                    DateOnly.TryParse(splittedLine[0], out datum);
+                    DateTime datum;
+                    DateTime.TryParse(splittedLine[0], out datum);
                     string FogyasztoKod = splittedLine[1];
                     string FogyasztoTipusKod = splittedLine[2];
                     string EtkezesTipusKod = splittedLine[3];
@@ -92,7 +93,10 @@ namespace ZCSVParser
                 );
             });
             Task.WaitAll( readStage, processStage );
-            Console.WriteLine("Halihó!");
+            Console.WriteLine("A fájlok beolvasása kész!");
+            DataExporter.ExportNapiAdagXML(GLOBALS.filesorok);
+            DataExporter.ExportNapiAdagPerEtkezesFajta(GLOBALS.filesorok);
+            DataExporter.ExportNapiAdagPerFogyasztoKod(GLOBALS.filesorok);
         }
     }
 }

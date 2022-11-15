@@ -8,14 +8,14 @@ namespace ZCSVParser.DATATYPES
 {
     public sealed record class RendelesInput
     {
-        public DateOnly Datum { get; init; }
+        public DateTime Datum { get; init; }
         public string FogyasztoKod { get; init; }
         public string FogyasztoTipusKod { get; init; }
         public string EtkezesTipusKod { get; init; }
         public string EtkezesFajtaKod { get; init; }
         public int f_adag { get; init; }
 
-        public RendelesInput(DateOnly datum, string fogyasztoKod, string fogyasztoTipusKod, string etkezesTipusKod, string etkezesFajtaKod, int f_adag)
+        public RendelesInput(DateTime datum, string fogyasztoKod, string fogyasztoTipusKod, string etkezesTipusKod, string etkezesFajtaKod, int f_adag)
         {
             Datum = datum;
             FogyasztoKod = fogyasztoKod;
