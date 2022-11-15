@@ -12,17 +12,17 @@ namespace ZCSVParser.VALIDATION
 {
     public static class PathValidator
     {
-        public static bool CanWorkWithPath(string QuestionablePath)
+        public static bool CanWorkWithPath(string QuestionableInputPath, string QuestionableOutputPath)
         {
-            if (!Directory.Exists(QuestionablePath))
+            if (!Directory.Exists(QuestionableInputPath) || !Directory.Exists(QuestionableOutputPath))
             {
-                Console.WriteLine("Nem lehet dolgozni a mappából, mert nem létezik");
+                Console.WriteLine("Nem lehet dolgozni a mappával, mert nem létezik");
                 return false;
             }
 
             foreach(char InvalidPathChar in Path.GetInvalidPathChars())
             {
-                if (QuestionablePath.Contains(InvalidPathChar))
+                if (QuestionableInputPath.Contains(InvalidPathChar) || QuestionableOutputPath.Contains(InvalidPathChar))
                 {
                     Console.WriteLine("Ezt az elérési utat nem használhatod, mert tartalmaz invalid karaktert!");
                     return false;
@@ -31,7 +31,7 @@ namespace ZCSVParser.VALIDATION
 
             try
             {
-                GLOBALS.InputFiles = (List<string>)Directory.EnumerateFiles(QuestionablePath,"*.csv");
+                GLOBALS.InputFiles = Directory.EnumerateFiles(QuestionableInputPath,"*.csv").ToList<string>();
             }
             catch (Exception e) when (e is IOException || e is PathTooLongException)
             {
@@ -43,7 +43,8 @@ namespace ZCSVParser.VALIDATION
                 Console.WriteLine("Úgy tűnik, nincs joga hozzáférni egy vagy több fájlhoz. Ellenőrizze a biztonsági beállításokat és próbálja újra!");
                 return false;
             }
-            GLOBALS.InputPath = QuestionablePath;
+            GLOBALS.InputPath = QuestionableInputPath;
+            GLOBALS.OutputPath = QuestionableOutputPath;
             return true;
         }
     }

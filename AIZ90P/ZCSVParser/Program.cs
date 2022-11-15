@@ -19,23 +19,37 @@ namespace ZCSVParser
             Console.WriteLine($"Használat: ./{System.AppDomain.CurrentDomain.FriendlyName} /utvonal/a/bemenethez /utvonal/a/kimenethez");
         }
 
-        public static async Task ReadAndProcessFiles(List<string> inputFiles)
+        static void Main(string[] args)
         {
+            if (args.Length != 2)
+            {
+                Console.WriteLine("Pontosan kettő paramétert kell megadj: A mappát, ahonnan olvasok, és egy másikat, ahova exportálok.");
+                Help();
+                Environment.Exit(-2);
+            }
+            if (!PathValidator.CanWorkWithPath(args[0], args[1]))
+            {
+                Console.WriteLine("Erről az útvonalról/útvonalra nem tudok dolgozni! Kérlek válassz másikat!");
+                Console.WriteLine($"Feltételezett INPUT: {args[0]}");
+                Console.WriteLine($"Feltételezett OUTPUT: {args[1]}");
+                Environment.Exit(-1);
+            }
             var lines = new BlockingCollection<string>();
 
             var readStage = Task.Run(() =>
             {
                 try
                 {
-                    foreach (var filePath in inputFiles)
+                    foreach (var filePath in GLOBALS.InputFiles)
                     {
                         using (var reader = new StreamReader(filePath))
                         {
                             string line;
-
+                            reader.ReadLine();
                             while ((line = reader.ReadLine()) != null)
                             {
                                 lines.Add(line);
+                                //Console.WriteLine(line);
                             }
                         }
                     }
@@ -77,33 +91,7 @@ namespace ZCSVParser
                 }
                 );
             });
-            Task.WaitAll(readStage, processStage);
-        }
-
-        public static async void RunFileProcessTasks()
-        {
-             await ReadAndProcessFiles(GLOBALS.InputFiles);
-        }
-
-        static void Main(string[] args)
-        {
-            if (args.Length != 2)
-            {
-                Console.WriteLine("Pontosan kettő paramétert kell megadj: A mappát, ahonnan olvasok, és egy másikat, ahova exportálok.");
-                Help();
-                Environment.Exit(-2);
-            }
-            if (!PathValidator.CanWorkWithPath(args[0]))
-            {
-                Console.WriteLine("Erről az útvonalról nem tudok dolgozni! Kérlek válassz másikat!");
-                Environment.Exit(-1);
-            }
-            if (!PathValidator.CanWorkWithPath(args[1]))
-            {
-                Console.WriteLine("Erre az útvonalra nem tudok dolgozni! Kérlek válassz másikat!");
-                Environment.Exit(-1);
-            }
-            RunFileProcessTasks();
+            Task.WaitAll( readStage, processStage );
             Console.WriteLine("Halihó!");
         }
     }
