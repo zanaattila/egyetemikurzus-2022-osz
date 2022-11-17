@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ZCSVParser.DATATYPES;
@@ -56,6 +51,16 @@ namespace ZCSVParser.RECORDS
                     Console.WriteLine("Hiba történt az XML szérializálásakor");
                 }
             }
+        }
+
+        public static void ExportAllXMLs(List<RendelesInput> sorok)
+        {
+            var NapiAdagTask = Task.Run(() => ExportNapiAdagXML(sorok));
+            var NapiAdagPerEtkezesFajtaTask = Task.Run(() => ExportNapiAdagPerEtkezesFajta(sorok));
+            var NapiAdagPerFogyasztoKodTask = Task.Run(() => ExportNapiAdagPerFogyasztoKod(sorok));
+            Console.WriteLine("Kezdődik");
+            Task.WaitAll(NapiAdagTask, NapiAdagPerEtkezesFajtaTask, NapiAdagPerFogyasztoKodTask);
+            Console.WriteLine("Végződik");
         }
     }
 }

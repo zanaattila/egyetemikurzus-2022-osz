@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ZCSVParser.VALIDATION
 {
@@ -20,7 +15,7 @@ namespace ZCSVParser.VALIDATION
                 return false;
             }
 
-            foreach(char InvalidPathChar in Path.GetInvalidPathChars())
+            foreach (char InvalidPathChar in Path.GetInvalidPathChars())
             {
                 if (QuestionableInputPath.Contains(InvalidPathChar) || QuestionableOutputPath.Contains(InvalidPathChar))
                 {
@@ -31,7 +26,7 @@ namespace ZCSVParser.VALIDATION
 
             try
             {
-                GLOBALS.InputFiles = Directory.EnumerateFiles(QuestionableInputPath,"*.csv").ToList<string>();
+                GLOBALS.InputFiles = Directory.EnumerateFiles(QuestionableInputPath, "*.csv").ToList<string>();
             }
             catch (Exception e) when (e is IOException || e is PathTooLongException)
             {

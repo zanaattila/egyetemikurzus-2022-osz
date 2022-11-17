@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZCSVParser.DATATYPES;
 using ZCSVParser.RECORDS;
@@ -36,7 +31,7 @@ namespace ZCSVParser
                 Environment.Exit(-1);
             }
             var lines = new BlockingCollection<string>();
-
+            Console.WriteLine("Elkezdődik a fájlok beolvasása és feldolgozása.");
             var readStage = Task.Run(() =>
             {
                 try
@@ -92,11 +87,13 @@ namespace ZCSVParser
                 }
                 );
             });
-            Task.WaitAll( readStage, processStage );
-            Console.WriteLine("A fájlok beolvasása kész!");
-            DataExporter.ExportNapiAdagXML(GLOBALS.filesorok);
-            DataExporter.ExportNapiAdagPerEtkezesFajta(GLOBALS.filesorok);
-            DataExporter.ExportNapiAdagPerFogyasztoKod(GLOBALS.filesorok);
+            Task.WaitAll(readStage, processStage);
+            Console.WriteLine("A fájlok beolvasása és feldolgozása kész!");
+            Console.WriteLine("Kimentem a statisztikai fájlokat a megadott elérési útra.");
+            DataExporter.ExportAllXMLs(GLOBALS.filesorok);
+            Console.WriteLine($"A program végrehajtása befejeződött! A kész XML fájlokat a {Path.GetFullPath(args[1])} mappában találja.");
+            Console.Write("A kilépéshez nyomjon egy entert...");
+            Console.ReadLine();
         }
     }
 }

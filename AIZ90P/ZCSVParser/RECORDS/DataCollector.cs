@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZCSVParser.DATATYPES;
 
 namespace ZCSVParser.RECORDS
@@ -17,7 +14,7 @@ namespace ZCSVParser.RECORDS
 
         public static List<NapiAdagPerEtkezesFajta> CollectDataForNapiAdagPerEtkezesFajta(List<RendelesInput> InputData)
         {
-            List<NapiAdagPerEtkezesFajta> data = InputData.GroupBy(x => new { x.Datum, x.EtkezesFajtaKod }).Select(c1 => new NapiAdagPerEtkezesFajta(c1.Key.Datum, c1.Key.EtkezesFajtaKod, c1.Sum(c => c.f_adag))).OrderBy(x=>x.Datum).ThenBy(efk=> Array.IndexOf(new char[] { 'R', 'T', 'E', 'U', 'V' },efk)).ToList<NapiAdagPerEtkezesFajta>();
+            List<NapiAdagPerEtkezesFajta> data = InputData.GroupBy(x => new { x.Datum, x.EtkezesFajtaKod }).Select(c1 => new NapiAdagPerEtkezesFajta(c1.Key.Datum, c1.Key.EtkezesFajtaKod, c1.Sum(c => c.f_adag))).OrderBy(x => x.Datum).ThenByDescending(efk => efk.EtkezesFajta).ToList<NapiAdagPerEtkezesFajta>();
             return data;
         }
 
