@@ -7,6 +7,7 @@ namespace D5BF9U.Creatures;
 public sealed class Creature
 {
     public string Name { get; init; }
+    public string SpeechBox { get; set; }
     public int Health { get; set; }
     public int Strength { get; set; }
     public int Haste { get; set; }
@@ -15,9 +16,8 @@ public sealed class Creature
     public DateTime GlobalCD { get; set; }
     public Dictionary<string,IStatusAilment> StatusAilments { get; set; }
     public Dictionary<string,ISkill> skillLists { get; set; }
-    //todo implement player
-    public void valami()
-    {
-        
-    }
+    //todo implement player; todo strings init them
+    
+    
+    
 }
