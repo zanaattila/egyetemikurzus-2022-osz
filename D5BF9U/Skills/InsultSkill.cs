@@ -10,4 +10,6 @@ public class InsultSkill : ISkill
     {
         throw new NotImplementedException();
     }
+    
+    
 }

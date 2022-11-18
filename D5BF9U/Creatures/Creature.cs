@@ -11,6 +11,7 @@ public sealed class Creature
     public int Strength { get; set; }
     public int Haste { get; set; }
     public bool IsImmune { get; set; }
+    public CreatureLog PersonalCombatLog { get; set; }
     public DateTime GlobalCD { get; set; }
     public Dictionary<string,IStatusAilment> StatusAilments { get; set; }
     public Dictionary<string,ISkill> skillLists { get; set; }
