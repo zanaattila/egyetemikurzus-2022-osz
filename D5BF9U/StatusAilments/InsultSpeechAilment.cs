@@ -29,10 +29,10 @@ public sealed class InsultSpeechAilment : IStatusAilment
         
     }
     
-    public void RequestAction(ConcurrentQueue<StatusAilmentQue> statusAilmentQues, Creature self, Creature target)
+    public void RequestAction(Creature self, Creature target)
     {
         StatusAilmentQue ailmentQue = new StatusAilmentQue(this, self, target);
-        statusAilmentQues.Enqueue(ailmentQue);
+        self.StatusAilmentQues.Enqueue(ailmentQue);
     }
 
     public void Activate(Creature self, Creature target)
@@ -41,6 +41,16 @@ public sealed class InsultSpeechAilment : IStatusAilment
     }
 
     public void TakeAction(Creature self, Creature target)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TakeAction(Creature self, Creature target, int value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TakeAction(Creature self, Creature target, string value)
     {
         throw new NotImplementedException();
     }

@@ -13,14 +13,14 @@ public sealed class Creature
     public int Health { get; set; }
     public int Strength { get; set; }
     public int Haste { get; set; }
-    public int DamageMultiplier { get; set; }
+    public double DamageMultiplier { get; set; }
     public bool IsImmune { get; set; }
     public CreatureLog PersonalCombatLog { get; set; }
     public DateTime GlobalCD { get; set; }
-    public ConcurrentQueue<StatusAilmentQue> AilmentQues { get; set; }
+    public ConcurrentQueue<StatusAilmentQue> StatusAilmentQues { get; set; }
     public ConcurrentQueue<SkillQue> SkillQues { get; set; }
     public Dictionary<string,IStatusAilment> StatusAilments { get; set; }
-    public Dictionary<string,ISkill> skillLists { get; set; }
+    public Dictionary<string,ISkill> SkillLists { get; set; }
     //todo implement player; todo strings init them
     
     

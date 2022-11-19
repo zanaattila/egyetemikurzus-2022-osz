@@ -12,11 +12,11 @@ public sealed class GruppenSkill :ISkill
     public string Description => "Causes the player to heal via a quickie gruppensex";
     
     
-    public void RequestAction(ConcurrentQueue<SkillQue> skillQues, Creature self, Creature target)
+    public void RequestAction( Creature self, Creature target)
     {
         //in theory since they all are from the same interface then they should be able to be stored, but i hope conversion will go smooth and nut just throw a random null exception at me
         SkillQue queMe = new SkillQue(this, self, target);
-        skillQues.Enqueue(queMe);
+        self.SkillQues.Enqueue(queMe);
     }
     
     public void CastMe(Creature self, Creature target)

@@ -20,6 +20,6 @@ public interface ISkill
     //DateTime LastUsed { get; set; } //For the project requires an immutable class, im going to keep these commented, and everything will depend on gcd
     //int InnerCD { get; } //given in millisec 
 
-    void RequestAction(ConcurrentQueue<SkillQue> skillQues, Creature self, Creature target);
+    void RequestAction(Creature self, Creature target);
     void CastMe(Creature self, Creature target);
 }

@@ -12,6 +12,8 @@ public enum StatusAilmentTypes
     OnSkillUse,
     Buff,
     DamageIncrease,
+    ActionIntegerValueRequired,
+    ActionStringValueRequired,
     Debuff,
     DamageOverTime,
     ScriptLike
