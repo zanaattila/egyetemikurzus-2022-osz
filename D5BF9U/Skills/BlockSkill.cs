@@ -26,6 +26,7 @@ public class BlockSkill : ISkill
     
     public void CastMe(Creature self, Creature target)
     {
+        
         throw new NotImplementedException();
     }
 }

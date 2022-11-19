@@ -9,5 +9,10 @@ public enum StatusAilmentTypes
     WhenStruck,//i dont think ill need Absorb, or do i
     Absorb,
     Immune,
-    OnSkillUse
+    OnSkillUse,
+    Buff,
+    DamageIncrease,
+    Debuff,
+    DamageOverTime,
+    ScriptLike
 }

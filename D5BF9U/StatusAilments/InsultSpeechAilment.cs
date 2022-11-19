@@ -1,31 +1,34 @@
 using System.Collections.Concurrent;
-using System.Data.SqlTypes;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
 
 namespace D5BF9U.StatusAilments;
 
-public sealed class CounterBuff : IStatusAilment
+public sealed class InsultSpeechAilment : IStatusAilment
 {
-    public string Name => "Counter";
-    public int DurationMillisec => 1000;
-    public int? MaxTicks => 1;
+    public string Name => "Insult Texts";
+    public int DurationMillisec => 6000;
+    public int? MaxTicks => 3;
     public int CurrentTicks { get; set; }
-    public int CounterValue { get; }
     public bool IsHarmful => false;
-    public bool IsDisplayed => true;
-    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.OnSkillUse };
+    public bool IsDisplayed => false;
+    public string[] Speech { get; set;}
+    public int SpeechIndex { get; set; } // yes really
+        //public bool TakeActionOnActivation 
+    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.ScriptLike };
     public DateTime TimeOfAcquisition { get; init; }
 
-
-    CounterBuff(int blockedValue)
+    public InsultSpeechAilment(string[] speechList)
     {
-        CurrentTicks = 1;
+        Speech = (string[]) speechList.Clone();
+        CurrentTicks = 0;
+        SpeechIndex = 0;
         TimeOfAcquisition = new DateTime();
         TimeOfAcquisition = DateTime.Now;
-        CounterValue = blockedValue * 3;
+        
     }
+    
     public void RequestAction(ConcurrentQueue<StatusAilmentQue> statusAilmentQues, Creature self, Creature target)
     {
         StatusAilmentQue ailmentQue = new StatusAilmentQue(this, self, target);
