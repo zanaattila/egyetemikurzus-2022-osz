@@ -11,6 +11,9 @@ public class BlockSkill : ISkill
     public bool AffectedByGCD => true;
     public bool IsHarmful => false;
 
+    public int? Value => null; //could've been null tho..., nah nvm
+    public double EffectiveRate => 0;
+
     public string Description =>
         "I'm a fan of Devil May Cry, so I tried to make a skill like royal guard, but unlike in dmc3," +
         " you will have double the time (0.2 sec) to perform a perfect block and theres no penalty for miss timing," +

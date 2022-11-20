@@ -10,6 +10,10 @@ public sealed class MagicSkill : ISkill
     public bool AffectedByGCD => true;
     public bool IsHarmful => true;
 
+    public int? Value => 3;
+
+    public double EffectiveRate => 0.33;
+
     public string Description =>
         "Getsugatensho! Fayar bollo! Shadow Bolt! Pyroblast! Lightning bolt! Soulfiya! Kamehameha! You name it, i got it, i cast it. " +
         "And just like all the time in games like these, ill just call it \'\'magic\'\' get away with it.";

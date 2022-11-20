@@ -23,6 +23,8 @@ public class InsultSkill : ISkill
     };
     
     public bool AffectedByGCD => true;
+    public int? Value => 3;
+    public double EffectiveRate => 1;
     public bool IsHarmful => true;
     public string Description => "Insulting the target 3 times over 6 seconds." +
                                  " The way this works is you and the target both get buff, your buff gonna change your text you say " +

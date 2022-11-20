@@ -45,7 +45,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
                 self.StatusAilments.TryAdd(Name, this);
             }
 
-            self.DamageMultiplier += Value;
+            self.DamageDoneMultiplier += Value;
         }
 
     }
@@ -55,7 +55,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
         throw new NotImplementedException();
     }
 
-    public void TakeAction(Creature self, Creature target, int value)
+    public void TakeAction(Creature self, Creature target, ref double? value)
     {
         throw new NotImplementedException();
     }
@@ -74,7 +74,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
                 self.StatusAilments.Remove(Name);
             }
 
-            self.DamageMultiplier -= Value;
+            self.DamageDoneMultiplier -= Value;
         }
     }
 }

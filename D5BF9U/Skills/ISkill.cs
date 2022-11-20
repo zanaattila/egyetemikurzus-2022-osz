@@ -10,6 +10,21 @@ public interface ISkill
     //todo, skills are not implemented, but in order to test they were implemented as default
     string Title { get; }
     string Description { get; }
+
+    //and i just realized what i left out is the most important... values...
+    int? Value { get; }
+    
+    double EffectiveRate { get; } //an easy way to nerf stuff, like from 90% it goes down to 60% and hit 33% less hahaha
+
+    ///so dmg done could go like:
+    /// give the skills value to SELF.DEALDMG
+    /// magic happens there with numbers like dmg multiplier and such
+    /// then effectiveness reduces that number and gives it to the TARGET.TAKEDMG
+    /// so it can get damage
+    /// ahaha, genius... wish...
+    
+    
+    
     bool AffectedByGCD { get; }
     bool IsHarmful { get; }
 

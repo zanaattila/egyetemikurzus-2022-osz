@@ -39,7 +39,7 @@ public sealed class InsultDebuff : IStatusAilment
         throw new NotImplementedException();
     }
 
-    public void TakeAction(Creature self, Creature target, int value)
+    public void TakeAction(Creature self, Creature target,ref double? value)
     {
         throw new NotImplementedException();
     }

@@ -33,6 +33,14 @@ AnsiConsole.Live(valami)
     */ //todo test later on stable release, tho supposed to work
 
 
+string valami = "hello";
+string tmp = valami;
+string v2 = "world";
+//okay it works, but had to update to dotnet 7
+Console.WriteLine(Interlocked.CompareExchange(ref valami,v2,valami));
+Console.WriteLine(valami);
+//i see now ahaaa
+
 
 var g1 =Game.GameOn();
 Task.WaitAll(g1);

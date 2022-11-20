@@ -17,7 +17,7 @@ public sealed class BlockBuff : IStatusAilment
     public bool IsDisplayed => true;
 
     //damn, took me long enough to get this
-    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.WhenStruck, StatusAilmentTypes.Immune, StatusAilmentTypes.ActionIntegerValueRequired };
+    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.WhenStruck, StatusAilmentTypes.ActionIntegerValueRequired };
 
     public DateTime TimeOfAcquisition { get; init; }
 
@@ -50,9 +50,14 @@ public sealed class BlockBuff : IStatusAilment
             }
         }
         
-        self.IsImmune = true; //as i see it shouldnt need a lock statement
+        self.IsInvicible = true; //as i see it shouldnt need a lock statement
     }
-    
+
+    public void TakeAction(Creature self, Creature target)
+    {
+        throw new NotImplementedException("Wrong Take Action function in BlockBuff");
+    }
+
     /// <summary>
     /// so the was as is follows: buffs and skills will be operated through a designated class
     /// that class will also ask the creature self to roll a damage number, and the creature target to take the damage
@@ -73,17 +78,14 @@ public sealed class BlockBuff : IStatusAilment
     /// <param name="self"></param>
     /// <param name="target"></param>
     /// <param name="value"></param>
-    public void TakeAction(Creature self, Creature target, int value) //todo consider TakeAction to make it a bool instead of a void so can check on the success of it in the caller, yes i will do this, tomorrow
+    public void TakeAction(Creature self, Creature target, ref double? value) //todo consider TakeAction to make it a bool instead of a void so can check on the success of it in the caller, yes i will do this, tomorrow
     {
-        CounterBuff buffUp = new CounterBuff(value);//and now 
+        CounterBuff buffUp = new CounterBuff(value is not null ? (int)value : 0);//and now 
         ProtectorsFrenzyBuff frenzyBuff = new ProtectorsFrenzyBuff();
         buffUp.RequestAction(self,target);
         frenzyBuff.RequestAction(self,target);
-    }
-
-    public void TakeAction(Creature self, Creature target)
-    {
-        throw new NotImplementedException("Wrong Take Action function in BlockBuff");
+        value = 0;//just in case;  and i think i was right 
+        Deactivate(self,target);
     }
 
     public void TakeAction(Creature self, Creature target, string value)

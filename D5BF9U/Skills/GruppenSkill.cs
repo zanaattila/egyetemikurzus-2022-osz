@@ -8,6 +8,8 @@ public sealed class GruppenSkill :ISkill
 {
     public string Title => "Gruppen";
     public bool AffectedByGCD => true;
+    public int? Value => 3;
+    public double EffectiveRate => 0.69;
     public bool IsHarmful => false;
     public string Description => "Causes the player to heal via a quickie gruppensex";
     

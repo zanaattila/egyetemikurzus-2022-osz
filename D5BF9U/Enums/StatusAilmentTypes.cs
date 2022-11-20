@@ -8,7 +8,6 @@ public enum StatusAilmentTypes
     OnHit,
     WhenStruck,//i dont think ill need Absorb, or do i
     Absorb,
-    Immune,
     OnSkillUse,
     Buff,
     DamageIncrease,

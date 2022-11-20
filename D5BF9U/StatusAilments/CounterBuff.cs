@@ -55,7 +55,7 @@ public sealed class CounterBuff : IStatusAilment
         throw new NotImplementedException("Wrong Take Action function in CounterBuff");
     }
 
-    public void TakeAction(Creature self, Creature target, int value)
+    public void TakeAction(Creature self, Creature target,ref double? value)
     {
         //how am i going to implement this....
         throw new NotImplementedException("Wrong Take Action function in CounterBuff");
@@ -65,7 +65,7 @@ public sealed class CounterBuff : IStatusAilment
     {
         if (value.Equals("Block"))
         {
-            target.takedamageitsnotimplementedyetaaaaaaaaaaaaaaah
+            target.TakeDmg(CounterValue);
         }
         
         Deactivate(self,target);
