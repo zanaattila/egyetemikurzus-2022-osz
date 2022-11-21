@@ -15,7 +15,14 @@ namespace ZCSVParser.RECORDS
             var adat = DataCollector.CollectDataForNapiAdag(sorok);
             using (var stream = File.Create(Path.Combine(GLOBALS.OutputPath, $"NapiAdag_osszesito_{DateTime.Now.ToString("yyyy-MM-dd_HH-mm")}.xml")))
             {
-                xs.Serialize(stream, adat);
+                try
+                {
+                    xs.Serialize(stream, adat);
+                }
+                catch (InvalidOperationException)
+                {
+                    Console.WriteLine("Hiba történt az XML szérializálásakor!");
+                }
             }
         }
 
@@ -31,7 +38,7 @@ namespace ZCSVParser.RECORDS
                 }
                 catch (InvalidOperationException)
                 {
-                    Console.WriteLine("Hiba történt az XML szérializálásakor");
+                    Console.WriteLine("Hiba történt az XML szérializálásakor!");
                 }
             }
         }
@@ -48,19 +55,19 @@ namespace ZCSVParser.RECORDS
                 }
                 catch (InvalidOperationException)
                 {
-                    Console.WriteLine("Hiba történt az XML szérializálásakor");
+                    Console.WriteLine("Hiba történt az XML szérializálásakor!");
                 }
             }
         }
 
         public static void ExportAllXMLs(List<RendelesInput> sorok)
         {
+            Console.WriteLine("A statisztikai adatok gyűjtése, és kiírása folyamatban...");
             var NapiAdagTask = Task.Run(() => ExportNapiAdagXML(sorok));
             var NapiAdagPerEtkezesFajtaTask = Task.Run(() => ExportNapiAdagPerEtkezesFajta(sorok));
             var NapiAdagPerFogyasztoKodTask = Task.Run(() => ExportNapiAdagPerFogyasztoKod(sorok));
-            Console.WriteLine("Kezdődik");
             Task.WaitAll(NapiAdagTask, NapiAdagPerEtkezesFajtaTask, NapiAdagPerFogyasztoKodTask);
-            Console.WriteLine("Végződik");
+            Console.WriteLine("A statisztikai adatok gyűjtése és kiírása befejeződött.");
         }
     }
 }

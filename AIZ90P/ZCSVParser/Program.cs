@@ -88,11 +88,11 @@ namespace ZCSVParser
                 );
             });
             Task.WaitAll(readStage, processStage);
-            Console.WriteLine("A fájlok beolvasása és feldolgozása kész!");
-            Console.WriteLine("Kimentem a statisztikai fájlokat a megadott elérési útra.");
+            Console.WriteLine("A fájlok beolvasása és feldolgozása befejeződött!");
+            Console.WriteLine("Kinyerem a statisztikai adatokat, majd kiírom őket a megfelelő mappába.");
             DataExporter.ExportAllXMLs(GLOBALS.filesorok);
-            Console.WriteLine($"A program végrehajtása befejeződött! A kész XML fájlokat a {Path.GetFullPath(args[1])} mappában találja.");
-            Console.Write("A kilépéshez nyomjon egy entert...");
+            Console.WriteLine($"A program végrehajtása befejeződött!\nA kész XML fájlokat a {Path.GetFullPath(args[1])} mappában találod.");
+            Console.Write("A kilépéshez nyomj egy entert...");
             Console.ReadLine();
         }
     }

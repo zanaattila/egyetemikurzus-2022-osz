@@ -30,12 +30,12 @@ namespace ZCSVParser.VALIDATION
             }
             catch (Exception e) when (e is IOException || e is PathTooLongException)
             {
-                Console.WriteLine("Sajnálatos módon valamilyen probléma adódott az Input/Output területen. Ellenőrizze a tárat, és próbálja meg újra!");
+                Console.WriteLine("Sajnálatos módon valamilyen probléma adódott az Input/Output területen. Ellenőrizd a tárat, és próbáld meg újra!");
                 return false;
             }
             catch (Exception e) when (e is UnauthorizedAccessException || e is SecurityException)
             {
-                Console.WriteLine("Úgy tűnik, nincs joga hozzáférni egy vagy több fájlhoz. Ellenőrizze a biztonsági beállításokat és próbálja újra!");
+                Console.WriteLine("Úgy tűnik, nincs jogod hozzáférni egy vagy több fájlhoz. Ellenőrizd a biztonsági beállításokat és próbáld újra!");
                 return false;
             }
             GLOBALS.InputPath = QuestionableInputPath;
