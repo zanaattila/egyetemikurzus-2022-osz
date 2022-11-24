@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 
 namespace D5BF9U.StatusAilments;
 
@@ -37,26 +38,41 @@ public sealed class InsultSpeechAilment : IStatusAilment
 
     public void Activate(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
+        {
+            return this;
+        });
     }
 
     public void TakeAction(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        if (SpeechIndex<3)
+        {
+            self.SetSpeech(Speech[SpeechIndex]);
+            ++SpeechIndex;
+            ++CurrentTicks;
+        }
+        else
+        {
+            if (!String.IsNullOrEmpty(self.GetSpeechBox()))
+            {
+                self.SetSpeech(String.Empty);   
+            }
+        }
     }
 
     public void TakeAction(Creature self, Creature target, ref  double? value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void Deactivate(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        self.StatusAilments.TryRemove(Name, out _);
     }
 }

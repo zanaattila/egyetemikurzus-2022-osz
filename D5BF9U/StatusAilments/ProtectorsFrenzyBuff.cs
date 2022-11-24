@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 
 namespace D5BF9U.StatusAilments;
 
@@ -31,50 +32,38 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
 
     public void Activate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
+        bool alreadyExists = false;
+        self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
         {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments[Name] = this;
-            }
-        }
-        else
+            alreadyExists = true;
+            return this;
+        });
+        if (!alreadyExists)
         {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.TryAdd(Name, this);
-            }
-
-            self.DamageDoneMultiplier += Value;
+            self.SetDamageDoneMultiplier(Value);
         }
-
     }
 
     public void TakeAction(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target, ref double? value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void Deactivate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
+        if (self.StatusAilments.TryRemove(Name, out _))
         {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.Remove(Name);
-            }
-
-            self.DamageDoneMultiplier -= Value;
+            self.SetDamageDoneMultiplier(-Value);
         }
     }
 }

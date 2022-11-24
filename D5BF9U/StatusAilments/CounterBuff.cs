@@ -3,6 +3,7 @@ using System.Data.SqlTypes;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 
 namespace D5BF9U.StatusAilments;
 
@@ -34,31 +35,21 @@ public sealed class CounterBuff : IStatusAilment
 
     public void Activate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
+        self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
         {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments[Name] = this;
-            }
-        }
-        else
-        {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.TryAdd(Name, this);
-            }
-        }
+            return this;
+        });
     }
 
     public void TakeAction(Creature self, Creature target)
     {
-        throw new NotImplementedException("Wrong Take Action function in CounterBuff");
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target,ref double? value)
     {
         //how am i going to implement this....
-        throw new NotImplementedException("Wrong Take Action function in CounterBuff");
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
@@ -73,12 +64,6 @@ public sealed class CounterBuff : IStatusAilment
 
     public void Deactivate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
-        {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.Remove(Name);
-            }
-        }
+        self.StatusAilments.TryRemove(Name, out _); //i hope the syntax sugar works!
     }
 }

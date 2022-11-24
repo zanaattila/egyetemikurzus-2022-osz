@@ -32,5 +32,6 @@ public class BlockSkill : ISkill
     {
         BlockBuff buffUp = new BlockBuff();
         buffUp.RequestAction(self,target);
+        self.SetLastGCDTrigger();
     }
 }

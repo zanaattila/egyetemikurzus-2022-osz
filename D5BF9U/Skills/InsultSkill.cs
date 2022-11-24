@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
+using D5BF9U.StatusAilments;
 
 namespace D5BF9U.Skills;
 
@@ -38,9 +39,30 @@ public class InsultSkill : ISkill
         self.SkillQues.Enqueue(queMe);
     }
 
+    
     public void CastMe(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        InsultDebuff debuff = new InsultDebuff();
+
+        Random rnd = new Random();
+
+        string[] insults = new string[3];
+        string[] sufferings = new string[3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            insults[i] = _insults[ rnd.Next(_insults.Length)];
+            sufferings[i] = _sufferings[ rnd.Next(_sufferings.Length)];
+        }
+        
+        InsultSpeechAilment selfSpeechAilment = new InsultSpeechAilment(insults);
+        InsultSpeechAilment targetSpeechAilment = new InsultSpeechAilment(sufferings);
+        
+        debuff.RequestAction(self,target);
+        selfSpeechAilment.RequestAction(self,target);
+        targetSpeechAilment.RequestAction(target,target);
+        
+        self.SetLastGCDTrigger();
     }
     
     

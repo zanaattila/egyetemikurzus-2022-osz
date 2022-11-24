@@ -20,10 +20,11 @@ public sealed class GruppenSkill :ISkill
         SkillQue queMe = new SkillQue(this, self, target);
         self.SkillQues.Enqueue(queMe);
     }
-    
+
     public void CastMe(Creature self, Creature target)
     {
-        
-        throw new NotImplementedException();
+        //it would be fun to play sound effects based on skills like this isnt it?
+        self.TakeHealing(self.DealHealing(Title));
+        self.SetLastGCDTrigger();
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using D5BF9U.Containers;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 using D5BF9U.Skills;
 using D5BF9U.StatusAilments;
 
@@ -48,14 +49,38 @@ public sealed class Creature
     public CreatureLog PersonalCombatLog { get; set; }
     public ConcurrentQueue<StatusAilmentQue> StatusAilmentQues { get; set; }
     public ConcurrentQueue<SkillQue> SkillQues { get; set; }
-    public Dictionary<string,IStatusAilment> StatusAilments { get; set; }
-    public Dictionary<string,ISkill> SkillLists { get; set; }
+    public ConcurrentDictionary<string,IStatusAilment> StatusAilments { get; set; }
+    public ConcurrentDictionary<string,ISkill> SkillLists { get; set; }
 
 
-    public int  GlobalCD { get; init; } //in millisec
-    //todo implement player; todo strings init them
-
+    //public int  GlobalCD { get; init; } //in millisec
     
+    //todo set speechbox
+    public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, int haste,ConcurrentDictionary<string,ISkill> skillLists)
+    {
+        Name = name;
+        BaseGlobalCoolDownMs = baseGlobalCoolDownMs;
+        IsAutoAttacking = isAutoAttacking;
+        MaxHealth = maxHealth;
+        Health = MaxHealth;
+        Strength = strength;
+        Haste = haste;
+
+        DamageDoneMultiplier = 1;
+        DamageTakenMultiplier = 1;
+        HealingDoneMultiplier = 1;
+        HealingTakenMultiplier = 1;
+
+        PersonalCombatLog = new CreatureLog();
+        StatusAilmentQues = new ConcurrentQueue<StatusAilmentQue>();
+        SkillQues = new ConcurrentQueue<SkillQue>();
+        StatusAilments = new ConcurrentDictionary<string, IStatusAilment>();
+        SkillLists = new ConcurrentDictionary<string, ISkill>(skillLists);
+        
+        SetLastGCDTrigger();
+        IsInvicible = false;
+        
+    }
     
     public double GetDamageDoneMultiplier()
     {
@@ -182,7 +207,7 @@ public sealed class Creature
     }
 
 
-    public void TakeDmg(int value)// might need to be boolean
+    public void TakeDmg(double? value)// might need to be boolean
     {
         double? damageTake = value * GetDamageTakenMultiplier();
         //CheckForStatusAilment(StatusAilmentTypes.Immune,"_NONE_", ref damageTake); i think ill just remove the immune type
@@ -238,8 +263,8 @@ public sealed class Creature
 
         if (SkillLists.Keys.Contains(whichSkill))
         {
-            double? damageDeal = (SkillLists[whichSkill].Value is not null 
-                ? SkillLists[whichSkill].Value * GetStrength() * GetDamageDoneMultiplier()
+            double? damageDeal = (SkillLists[whichSkill].Value is not null
+                ? SkillLists[whichSkill].Value * SkillLists[whichSkill].EffectiveRate * GetStrength() * GetDamageDoneMultiplier()
                 : 0);
 
             CheckForStatusAilment(StatusAilmentTypes.OnSkillUse, whichSkill, ref damageDeal);
@@ -274,7 +299,7 @@ public sealed class Creature
         }
         else
         {
-            //todo log on error line, that it has no skill as such
+            throw new DealDmgError(whichSkill);
             return null;
         }
     }
@@ -290,11 +315,12 @@ public sealed class Creature
         }
         else
         {
+            //todo log its on cooldown
             return false;
         }
     }
 
-    public void TakeHealing(int value)
+    public void TakeHealing(double? value)
     {
         double? healTake = value * GetDamageTakenMultiplier();
         if (healTake is not null  && healTake !=0)

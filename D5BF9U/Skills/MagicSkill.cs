@@ -27,6 +27,7 @@ public sealed class MagicSkill : ISkill
     
     public void CastMe(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        target.TakeDmg(self.DealDmg(Title));
+        self.SetLastGCDTrigger();
     }
 }

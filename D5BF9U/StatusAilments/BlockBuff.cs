@@ -4,6 +4,7 @@ using System.Xml.Schema;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 
 namespace D5BF9U.StatusAilments;
 
@@ -35,27 +36,24 @@ public sealed class BlockBuff : IStatusAilment
 
     public void Activate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
+        self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
         {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments[Name] = this;
-            }
-        }
-        else
-        {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.TryAdd(Name, this);
-            }
-        }
+            //well this is a syntax i didnt expect
+            return this;
+        });
         
-        self.IsInvicible = true; //as i see it shouldnt need a lock statement
     }
 
+    /// <summary>
+    /// since this buffs takeaction is called in take dmg with a parameter, but will also be called by the buff watcher
+    /// takeaction here will call the deactivate method
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="target"></param>
+    /// <exception cref="BuffTakeActionError"></exception>
     public void TakeAction(Creature self, Creature target)
     {
-        throw new NotImplementedException("Wrong Take Action function in BlockBuff");
+        Deactivate(self,target);
     }
 
     /// <summary>
@@ -84,23 +82,19 @@ public sealed class BlockBuff : IStatusAilment
         ProtectorsFrenzyBuff frenzyBuff = new ProtectorsFrenzyBuff();
         buffUp.RequestAction(self,target);
         frenzyBuff.RequestAction(self,target);
+        self.PersonalCombatLog.LogAction(String.Empty, 0,false,false,$"BLOCKED ~( {value} )~");
         value = 0;//just in case;  and i think i was right 
         Deactivate(self,target);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
     {
-        throw new NotImplementedException("Wrong Take Action function in BlockBuff ");
+        throw new BuffTakeActionError(Name);
     }
 
     public void Deactivate(Creature self, Creature target)
     {
-        if (self.StatusAilments.ContainsKey(Name))
-        {
-            lock (self.StatusAilments)
-            {
-                self.StatusAilments.Remove(Name);
-            }
-        }
+        self.StatusAilments.TryRemove(Name, out _);
+        //maybe i should log if it wasnt successful to remove
     }
 }

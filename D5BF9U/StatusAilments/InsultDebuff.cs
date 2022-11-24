@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using D5BF9U.Containers;
 using D5BF9U.Creatures;
 using D5BF9U.Enums;
+using D5BF9U.Exceptions;
 
 namespace D5BF9U.StatusAilments;
 
@@ -13,6 +14,9 @@ public sealed class InsultDebuff : IStatusAilment
     public int CurrentTicks { get; set; }
     public bool IsHarmful => true;
     public bool IsDisplayed => true;
+    
+    public Creature Self { get; set; }
+    public Creature Target { get; set; }
     public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.Debuff,StatusAilmentTypes.DamageOverTime };
     public DateTime TimeOfAcquisition { get; init; }
 
@@ -25,32 +29,38 @@ public sealed class InsultDebuff : IStatusAilment
     
     public void RequestAction(Creature self, Creature target)
     {
+        Self = self;
+        Target = target;
         StatusAilmentQue ailmentQue = new StatusAilmentQue(this, self, target);
         self.StatusAilmentQues.Enqueue(ailmentQue);
     }
 
     public void Activate(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        target.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
+        {
+            return this;
+        });
     }
 
     public void TakeAction(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        //well yes, i rather saved the creatures cos self and target may flip during activation, and what if target dies etc or changes target? tbh shouldnt happen but better be safe
+        Target.TakeDmg(Self.DealDmg("Insult"));
     }
 
     public void TakeAction(Creature self, Creature target,ref double? value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
     {
-        throw new NotImplementedException();
+        throw new BuffTakeActionError(Name);
     }
 
     public void Deactivate(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        self.StatusAilments.TryRemove(Name, out _);
     }
 }
