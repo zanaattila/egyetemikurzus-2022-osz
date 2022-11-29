@@ -108,9 +108,6 @@ public sealed class Game
         
         ConcurrentBag<int> GudSzamok = new ConcurrentBag<int>(); // ő a lista
         ConcurrentDictionary<int,int> mydict = new ConcurrentDictionary<int, int>();
-        //todo, fontos, optimalizálásnak
-        /*int i = i++;  //ez lassabb
-        ++i;#1# //ez gyorsabb, ez elemi művelet
 
 
         foreach (var szam in GudSzamok)

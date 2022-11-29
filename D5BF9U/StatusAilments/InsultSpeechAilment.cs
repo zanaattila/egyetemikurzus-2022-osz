@@ -17,7 +17,7 @@ public sealed class InsultSpeechAilment : IStatusAilment
     public string[] Speech { get; set;}
     public int SpeechIndex { get; set; } // yes really
         //public bool TakeActionOnActivation 
-    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.ScriptLike };
+    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.OverTimeEffect };
     public DateTime TimeOfAcquisition { get; init; }
 
     public InsultSpeechAilment(string[] speechList)
@@ -46,7 +46,7 @@ public sealed class InsultSpeechAilment : IStatusAilment
 
     public void TakeAction(Creature self, Creature target)
     {
-        if (SpeechIndex<3)
+        if (SpeechIndex<MaxTicks)
         {
             self.SetSpeech(Speech[SpeechIndex]);
             ++SpeechIndex;

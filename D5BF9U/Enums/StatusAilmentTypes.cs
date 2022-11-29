@@ -15,5 +15,6 @@ public enum StatusAilmentTypes
     ActionStringValueRequired,
     Debuff,
     DamageOverTime,
-    ScriptLike
+    HealingOverTime,
+    OverTimeEffect
 }

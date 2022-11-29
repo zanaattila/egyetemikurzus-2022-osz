@@ -47,6 +47,7 @@ public sealed class InsultDebuff : IStatusAilment
     {
         //well yes, i rather saved the creatures cos self and target may flip during activation, and what if target dies etc or changes target? tbh shouldnt happen but better be safe
         Target.TakeDmg(Self.DealDmg("Insult"));
+        ++CurrentTicks;
     }
 
     public void TakeAction(Creature self, Creature target,ref double? value)

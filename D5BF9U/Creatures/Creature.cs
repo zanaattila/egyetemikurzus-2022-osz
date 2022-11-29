@@ -350,7 +350,20 @@ public sealed class Creature
             return null;
         }
     }
-    
+
+
+    public async Task<int> AutoAttack()
+    {
+        Random rnd = new Random();
+        var skillOptions = SkillLists.Keys;
+        while (IsAutoAttacking && GetHealth()> 0)
+        {
+            ActionRequester(skillOptions.ElementAt(rnd.Next(skillOptions.Count)));
+            Thread.Sleep(100);
+        }
+            
+        return GetHealth();
+    }
     
     
 }
