@@ -4,6 +4,18 @@ namespace D5BF9U.Handlers;
 
 public sealed class UIOperator
 {
+    public static string IntoALineWithNewLine(string [] input)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var line in input)
+        {
+            sb.Append(line);
+            sb.Append("\n");
+        }
+        sb.Length--;
+        return sb.ToString();
+    }
+    
     public static string IntoALine(string [] input)
     {
         StringBuilder sb = new StringBuilder();

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using D5BF9U.Containers;
 using D5BF9U.Enums;
 using D5BF9U.Exceptions;
+using D5BF9U.Handlers;
 using D5BF9U.Skills;
 using D5BF9U.StatusAilments;
 
@@ -13,6 +14,7 @@ public sealed class Creature
     //damn, do i have to make everything interlocked? hope im on the right track
     //once again writing all getters and setter by hand
     public string Name { get; init; }
+    public string ProfilePic { get; }
     public int BaseGlobalCoolDownMs { get; init; } //tbh i should just make it get only
     public bool IsAutoAttacking { get; init; }
     public string SpeechBox;
@@ -56,7 +58,7 @@ public sealed class Creature
     //public int  GlobalCD { get; init; } //in millisec
     
     //todo set speechbox
-    public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, int haste,ConcurrentDictionary<string,ISkill> skillLists)
+    public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, int haste,ConcurrentDictionary<string,ISkill> skillLists, string profilePicPath)
     {
         Name = name;
         BaseGlobalCoolDownMs = baseGlobalCoolDownMs;
@@ -79,7 +81,24 @@ public sealed class Creature
         
         SetLastGCDTrigger();
         IsInvicible = false;
-        
+
+        try
+        {
+            var appDir = AppContext.BaseDirectory;
+            //todo how to do it differently, cos teacher said it should not be done like that
+            string[] picArray= File.ReadAllLines(Path.Combine(appDir,"../../../ObjektumReferendum/"+profilePicPath));
+            ProfilePic = UIOperator.IntoALine(picArray);
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"The file: {profilePicPath} doesn't exist");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
     }
     
     public double GetDamageDoneMultiplier()

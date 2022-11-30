@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Xml.Schema;
 using D5BF9U;
 using D5BF9U.AutoTasks;
 using Spectre.Console;
@@ -37,7 +38,7 @@ AnsiConsole.Live(valami)
 string[] nem = new[] { "ceh", "nem", "igen", "minek" };
 
 Table root = new Table();
-root.AddColumn("Name").Width(40);
+root.AddColumn("").Width(40);
 /*root.AddColumn("");
 root.AddColumn("npc.Name"); ;
 Panel vala = new Panel("player \nsmlaks\nlehulelel");
@@ -49,6 +50,22 @@ BarChart fave = new BarChart().Width(50).AddItem(valak, 20, color: Color.Green);
 //root.AddRow(new BarChart().Width(20).AddItem("health",20,color: Color.Green));
 double i = 0;
 root.AddRow(fave);
+var grid = new Grid();
+
+grid.AddColumn();
+grid.AddColumn();
+grid.AddColumn();
+
+// Add header row 
+grid.AddRow(new Markup[]
+{
+    new Markup("[red]Header 1[/]").LeftAligned(),
+    new Markup("Header 2", new Style(Color.Green, Color.Black)).Centered(),
+    new Markup("Header 3", new Style(Color.Blue, Color.Black)).RightAligned()
+});
+grid.AddRow("sss", "mesélj", "mizu");
+root.AddRow(grid);
+root.AddRow(new Panel("vhali\njli\nknuuk\nlsks ksks").Header("log"));
 //root.UpdateCell(0,2,)
 AnsiConsole.Live(root).Start(ui =>
 {
@@ -61,7 +78,7 @@ AnsiConsole.Live(root).Start(ui =>
         //TODO WITH MAX VALUE!!!! damn it took 2 and a half hours just finding it and in the end i found a description in the github issues
         //https://github.com/spectreconsole/spectre.console/pull/545
         valak = "heeeeee?";
-        root.UpdateCell(0,0,new BarChart().Width(40).AddItem("123456", Math.Round(i,1), Color.Green).WithMaxValue(20));
+        root.UpdateCell(0,0,new BarChart().Width(40).AddItem("123456", Math.Round(i,1), Color.Green).WithMaxValue(40));
         
         // fave.Data[0] = new BarChartItem("health", i, Color.Green);
         ui.UpdateTarget(root);
