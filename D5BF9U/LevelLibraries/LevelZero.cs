@@ -24,7 +24,7 @@ public sealed class LevelZero
                 .Title(UIOperator.ColoredStringBuilder(titleColor,"Welcome to the game of Deviants!",endTag))
                 .PageSize(10)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
-                .MoreChoicesText("[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
+                .MoreChoicesText("[green](this line of code is not even shown)[/]") //this line of code doesnt even do anything
                 .AddChoices(new[]
                 {
                     UIOperator.ColoredStringBuilder(choiceColor,"Start New Game",endTag), UIOperator.ColoredStringBuilder(choiceColor,"Chapter Select",endTag),

@@ -27,7 +27,7 @@ public sealed class UIOperator
         return sb.ToString();
     }
     
-    public static string ColoredStringBuilder(string color, string choice, string endTag)
+    public static string ColoredStringBuilder(string color, string choice, string endTag="[/]")
     {
         StringBuilder concatWithColor = new StringBuilder();
         concatWithColor.Append(color);
@@ -36,7 +36,7 @@ public sealed class UIOperator
         return concatWithColor.ToString();
     }
 
-    public static string ColoredStringDemolisher(string color,string destroyMe, string endTag)
+    public static string ColoredStringDemolisher(string color,string destroyMe, string endTag="[/]")
     {
         StringBuilder keywordTrimmer = new StringBuilder();
         keywordTrimmer.Append(destroyMe);

@@ -13,12 +13,17 @@ public sealed class LevelHandler
         //cinematic of pre
         LevelOne.Level_1_Cinematic_1();
         //fight
-        LevelOne.Level_1_Fight();
-        //win or lose
-        LevelOne.Level_1_Win();
-        LevelOne.Level_1_Lose();
-        //post cinematic
-        LevelOne.Level_1_Cinematic_2();
+        if (LevelOne.Level_1_Fight())
+        {
+            LevelOne.Level_1_Win();
+            //post cinematic
+            LevelOne.Level_1_Cinematic_2();
+        }
+        else
+        {
+            LevelOne.Level_1_Lose();
+        }
+        
     }
     
     

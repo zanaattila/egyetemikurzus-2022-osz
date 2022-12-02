@@ -15,6 +15,8 @@ public sealed class Creature
     //once again writing all getters and setter by hand
     public string Name { get; init; }
     public string ProfilePic { get; }
+    
+    public string[] SkillKeysOrdered { get; }
     public int BaseGlobalCoolDownMs { get; init; } //tbh i should just make it get only
     public bool IsAutoAttacking { get; init; }
     public string SpeechBox;
@@ -78,6 +80,8 @@ public sealed class Creature
         SkillQues = new ConcurrentQueue<SkillQue>();
         StatusAilments = new ConcurrentDictionary<string, IStatusAilment>();
         SkillLists = new ConcurrentDictionary<string, ISkill>(skillLists);
+
+        SkillKeysOrdered=SkillLists.Keys.OrderDescending().ToArray();
         
         SetLastGCDTrigger();
         IsInvicible = false;
@@ -85,7 +89,6 @@ public sealed class Creature
         try
         {
             var appDir = AppContext.BaseDirectory;
-            //todo how to do it differently, cos teacher said it should not be done like that
             string[] picArray= File.ReadAllLines(Path.Combine(appDir,"../../../ObjektumReferendum/"+profilePicPath));
             ProfilePic = UIOperator.IntoALine(picArray);
         }
@@ -369,18 +372,42 @@ public sealed class Creature
             return null;
         }
     }
-
-
+    
+    
     public async Task<int> AutoAttack()
     {
         Random rnd = new Random();
         var skillOptions = SkillLists.Keys;
-        while (IsAutoAttacking && GetHealth()> 0)
+        while (IsAutoAttacking && GetHealth()> 0 && Target.GetHealth() > 0)
         {
             ActionRequester(skillOptions.ElementAt(rnd.Next(skillOptions.Count)));
             Thread.Sleep(100);
         }
             
+        return GetHealth();
+    }
+
+    public async Task<int> ManualAttack()
+    {
+        int value = -1;
+        while (GetHealth() >0 && Target.GetHealth() > 0)
+        {
+            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+            if (char.IsDigit(pressedKey.KeyChar))
+            {
+                value = int.Parse(pressedKey.KeyChar.ToString());
+            }
+            else
+            {
+                value = -1;
+            }
+
+            if (value > 0 && value <  SkillKeysOrdered.Length+1 )
+            {
+                ActionRequester(SkillKeysOrdered[value - 1]);
+            }
+        }
+
         return GetHealth();
     }
     

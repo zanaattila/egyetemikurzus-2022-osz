@@ -1,6 +1,8 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using D5BF9U.Enums;
 using D5BF9U.Globals;
+using D5BF9U.Skills;
 using Spectre.Console;
 
 namespace D5BF9U.Handlers;
@@ -48,6 +50,22 @@ public sealed class MyLoader
             Thread.Sleep(1300);
             Globals.Globals.MySwitch = LevelAdjustingSwitch.Exit;
         }
+    }
+    
+    public static ConcurrentDictionary<string, ISkill> CreateSpellbook(string[] skillNames)
+    {
+        SkillLoader skillLoader = new SkillLoader();
+        ConcurrentDictionary<string, ISkill> creatureSkills = new ConcurrentDictionary<string, ISkill>();
+        foreach (var skill in skillNames)
+        {
+            if (skillLoader.Skills.ContainsKey(skill))
+            {
+                creatureSkills.TryAdd(skill, skillLoader.Skills[skill]);
+            }
+        }
+
+        return creatureSkills;
+
     }
 
     

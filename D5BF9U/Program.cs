@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using System.Xml.Schema;
 using D5BF9U;
 using D5BF9U.AutoTasks;
+using D5BF9U.Handlers;
 using Spectre.Console;
 
 /*
@@ -64,9 +66,22 @@ grid.AddRow(new Markup[]
     new Markup("Header 3", new Style(Color.Blue, Color.Black)).RightAligned()
 });
 grid.AddRow("sss", "mesélj", "mizu");
+
+AnsiConsole.Write(new Markup(UIOperator.ColoredStringBuilder("[red]","Congratulations!")));
+AnsiConsole.Write(new Markup(UIOperator.ColoredStringBuilder("[red]","Congratulations!")));
 root.AddRow(grid);
 root.AddRow(new Panel("vhali\njli\nknuuk\nlsks ksks").Header("log"));
+root.HideHeaders();
+StringBuilder stringBuilder = new StringBuilder();
+stringBuilder.Append("valamiiiiiiiiii");
+Console.WriteLine(stringBuilder.ToString());
+stringBuilder.Append("ááááááááááááááááááááááá");
+Console.WriteLine(stringBuilder.ToString());
+
+string valami = "";
+byte[] tmp= {0x79,0x6F,0x75,0x27,0x76,0x65,0x20,0x6A,0x75,0x73,0x74,0x20,0x61,0x63,0x71,0x75,0x69,0x72,0x65,0x64,0x20,0x61,0x20,0x6E,0x65,0x77,0x20,0x73,0x65,0x78,0x20,0x6F,0x62,0x6A,0x65,0x63,0x74,0x21};
 //root.UpdateCell(0,2,)
+Console.WriteLine(Encoding.ASCII.GetString(tmp));
 AnsiConsole.Live(root).Start(ui =>
 {
     while (true)
@@ -78,24 +93,30 @@ AnsiConsole.Live(root).Start(ui =>
         //TODO WITH MAX VALUE!!!! damn it took 2 and a half hours just finding it and in the end i found a description in the github issues
         //https://github.com/spectreconsole/spectre.console/pull/545
         valak = "heeeeee?";
-        root.UpdateCell(0,0,new BarChart().Width(40).AddItem("123456", Math.Round(i,1), Color.Green).WithMaxValue(40));
+        int nemka = 0;
+        ConsoleKeyInfo keyInfo =  Console.ReadKey(true);
+        if (char.IsDigit(keyInfo.KeyChar))
+        {
+            nemka = int.Parse(keyInfo.KeyChar.ToString());
+        }
+        root.UpdateCell(0,0,new BarChart().Width(40).AddItem(keyInfo.KeyChar.ToString()+$"{nemka==4}", Math.Round(i,1), Color.Green).WithMaxValue(40));
         
         // fave.Data[0] = new BarChartItem("health", i, Color.Green);
         ui.UpdateTarget(root);
         ui.Refresh();
         Thread.Sleep(14);
-        Console.ReadKey();
+       // Console.ReadKey();
         
             /*root.Rows.Update(0,0,
     ui.UpdateTarget(root.UpdateCell(0));*/ ;
     }
 });
 
-string valami = "hello";
-string tmp = valami;
+/*string valami = "hello";
+string tmp = valami;*/
 string v2 = "world";
 //okay it works, but had to update to dotnet 7
-Console.WriteLine(Interlocked.CompareExchange(ref valami,v2,valami));
+//Console.WriteLine(Interlocked.CompareExchange(ref valami,v2,valami));
 Console.WriteLine(valami);
 //i see now ahaaa
 

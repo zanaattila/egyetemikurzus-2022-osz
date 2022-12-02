@@ -1,4 +1,5 @@
 using System.Security.Principal;
+using System.Text;
 using D5BF9U.Creatures;
 using D5BF9U.Handlers;
 using Spectre.Console;
@@ -11,7 +12,9 @@ public sealed class UIUpdater
     private Creature Npc { get; set; }
     string CatColor => "[deeppink3_1]";
     string PlayerColor => "[orangered1]";
-    string EndTag => "[/]"; 
+    string EndTag => "[/]";
+
+    private int TableRows => 13;
     public UIUpdater(Creature player, Creature npc)
     {
         Player = player;
@@ -39,6 +42,18 @@ public sealed class UIUpdater
         return barCharts.ToArray();
     }
 
+    private BarChart CooldownBarChart(Creature creature)
+    {
+        BarChart retme = new BarChart();
+        if (DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds < creature.BaseGlobalCoolDownMs*creature.GetHaste())
+        {
+            retme.AddItem("CD", DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds * 0.01)
+                .WithMaxValue(creature.BaseGlobalCoolDownMs * creature.GetHaste() * 0.01);
+        }
+
+        return retme;
+    }
+
     private Grid GridUserInterface()
     {
         Grid retme = new Grid();
@@ -50,6 +65,8 @@ public sealed class UIUpdater
             new Markup(UIOperator.ColoredStringBuilder(CatColor,Npc.Name,EndTag)),
             new Markup(UIOperator.ColoredStringBuilder(CatColor,Npc.GetSpeechBox(),EndTag))
         });
+        
+        //this might cause error
 
 
         retme.AddRow(new Markup[]
@@ -60,94 +77,98 @@ public sealed class UIUpdater
         });
         return retme;
     }
+
+    private Table CreatureTableMaker(Creature creature)
+    {
+        Table creatureTable = new Table();
+        creatureTable.AddColumn(new TableColumn(new Markup(UIOperator.ColoredStringBuilder("[darkmagenta]",creature.Name,"[/]"))));
+        for (int i = 0; i < TableRows; i++)
+        {
+            creatureTable.AddEmptyRow();
+        }
+        BarChart[] creatureBarChart = CreatureBarChartMaker(creature);
+        for (int i = 0; i < creatureBarChart.Length || i < TableRows; i++)
+        {
+            creatureTable.UpdateCell(i, 0, creatureBarChart[i]);
+        }
+        Panel creaturePanel = CreaturePanel(creature);
+        creatureTable.AddRow(creaturePanel); // this row is the last one, so can use it as @tableRows
+        return creatureTable;
+    }
+
+    private string ListPlayerSkills()
+    {
+        string space8 = "        "; //8 times 
+        int counter = 1;
+        //IOrderedEnumerable<string> skills = Player.SkillLists.Keys.ToList().OrderDescending();
+        StringBuilder sb = new StringBuilder();
+        foreach (var skill in Player.SkillKeysOrdered)
+        {
+            sb.Append(skill);
+            sb.Append($" ~ {counter}");
+            sb.Append(space8);
+            ++counter;
+        }
+
+        sb.Length -= 8;
+        string color = "[lightsalmon3_1]";
+        string endTag = "[/]";
+        return UIOperator.ColoredStringBuilder(color, sb.ToString(), endTag);
+    }
+    
     
     public async Task<Creature> FightUI()
     {
-        int tableRows = 13;
-        Table root = new Table();
-        //add table last
-
-        //add player stuffs
-        /*Table playerTable = new Table();
-        playerTable.AddColumn(new TableColumn(player.Name).Centered());*/
-        
+               
         //player tables, right side
-        Table playerTable = new Table();
-        playerTable.AddColumn(new TableColumn(new Markup(UIOperator.ColoredStringBuilder("[darkmagenta]",Player.Name,"[/]"))));
-        for (int i = 0; i < tableRows; i++)
-        {
-            playerTable.AddEmptyRow();
-        }
-        BarChart[] playerBarCharts = CreatureBarChartMaker(Player);
-        for (int i = 0; i < playerBarCharts.Length || i < tableRows; i++)
-        {
-            playerTable.UpdateCell(i, 0, playerBarCharts[i]);
-        }
-        Panel playerLog = CreaturePanel(Player);
-        playerTable.AddRow(playerLog); // this row is the last one, so can use it as @tableRows
-        
-        
+
+        Table playerTable = CreatureTableMaker(Player);
+
+       
         //error might occour with rows being blank
 
         //npc tables, right side
-        Table npcTable = new Table();
-        npcTable.AddColumn(new TableColumn(new Markup(UIOperator.ColoredStringBuilder("[darkmagenta]",Npc.Name,"[/]"))));
-        for (int i = 0; i < tableRows; i++)
-        {
-            npcTable.AddEmptyRow();
-        }
-        BarChart[] npcBarCharts = CreatureBarChartMaker(Npc);
-        for (int i = 0; i < npcBarCharts.Length || i < tableRows; i++)
-        {
-            npcTable.UpdateCell(i, 0, npcBarCharts[i]);
-        }
-        Panel npcLog = CreaturePanel(Npc);
-        npcTable.AddRow(npcLog);
-        
-        
-        //gui from here
+        Table npcTable = CreatureTableMaker(Npc);
 
+        
+        //GUI
         Grid GUI = GridUserInterface();
-        
-        
-        
-        //todo next is to assemble these into a 3 column table
-        
-
-       
 
 
-        /*AnsiConsole.Live(valami2).Start(UI =>
+        Table wrapperRoot = new Table();
+        wrapperRoot.AddColumns("if you see this header rendered", "then consider it an easter egg", "cos it means i fucked up bad");
+        wrapperRoot.HideHeaders();
+
+        wrapperRoot.AddEmptyRow();
+        wrapperRoot.AddEmptyRow();
+
+        wrapperRoot.UpdateCell(0, 0, playerTable);
+        wrapperRoot.UpdateCell(0, 1, GUI);
+        wrapperRoot.UpdateCell(0, 2, npcTable);
+
+        wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
+        wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+        wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+
+        
+
+        AnsiConsole.Live(wrapperRoot).Start(ui =>
         {
-
-            for (int i = 0; i < 500000000; i++)
+            while (Npc.GetHealth()> 0 && Player.GetHealth() >0 )
             {
-                    
-                UI.Refresh();
+                
+                wrapperRoot.UpdateCell(0, 0, CreatureTableMaker(Player));
+                wrapperRoot.UpdateCell(0, 1, GridUserInterface());
+                wrapperRoot.UpdateCell(0, 2, CreatureTableMaker(Npc));
+
+                wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
+                //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+                wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+                
+                Thread.Sleep(14); //to give it near 60 fps
             }
-
-            UI.Refresh();
-            Thread.Sleep(1150);
-            //valami2.AddRow(valami, valami);
-
-            meine = "anyaaaaaaaad";
-            UI.UpdateTarget(valami);
-            UI.UpdateTarget(valami2);
-            Thread.Sleep(1150);
-            meine = "namivan, megy?";
-
-            valami.Rows.Update(0, 0, new Markup(meine));
-            UI.UpdateTarget(valami);
-            UI.UpdateTarget(valami2);
-            //UI.Refresh();
-            Thread.Sleep(1250);
-            valami.BorderColor(Color.Yellow);
-
-            valami.Rows.Update(0, 1, new Markup("úgy néz ki igen"));
-            //valami2[0][0]=
-            UI.Refresh();
-            Thread.Sleep(1250);
-        });*/
+            
+        });
         
         
         
