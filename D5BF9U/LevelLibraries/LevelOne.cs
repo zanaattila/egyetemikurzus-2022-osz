@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using D5BF9U.AutoTasks;
 using D5BF9U.Creatures;
@@ -21,10 +22,10 @@ public sealed class LevelOne
         ConcurrentDictionary<string, ISkill> enemySkills = MyLoader.CreateSpellbook(new string[] { "Magic", "CatClaw" });
         
         Creature player = new Creature("Vaento", 1000, false, 300, 4, 1,
-            playerSkills,"../../../ObjektumReferendum/me.txt");
+            playerSkills,"me.txt");
 
         Creature enemy = new Creature("Fluffy Hanekawa", 1200, true, 500, 4, 1, enemySkills,
-            "../../../ObjektumReferendum/catto*.txt");
+            "catto.txt");
         
         BuffTasker buffTasker = new BuffTasker();
         BuffWatcher buffWatcher = new BuffWatcher();
@@ -61,8 +62,8 @@ public sealed class LevelOne
         {
             catArr = File.ReadAllLines(Path.Combine(appDir,"../../../ObjektumReferendum/cat.txt"));
             playerArr =File.ReadAllLines(Path.Combine(appDir, "../../../ObjektumReferendum/me.txt"));
-            cat = UIOperator.IntoALine(catArr);
-            player = UIOperator.IntoALine(playerArr);
+            cat = UIOperator.IntoALineWithNewLine(catArr);
+            player = UIOperator.IntoALineWithNewLine(playerArr);
         }
         catch (FileNotFoundException)
         {
@@ -87,7 +88,7 @@ public sealed class LevelOne
             mygrid.AddRow(new Text(""), new Markup("[red]This da evilest da fluffiest catgirl whose hp is 100![/]").Centered(), new Text(""));
             UI.Refresh();
             Thread.Sleep(4300);
-            mygrid.AddRow(new Text(""), new Markup("[red]But me and my gruppie will take it on![/]").Centered(), new Text(""));
+            mygrid.AddRow(new Text(""), new Markup("[red]But me and my gruppies will take it on![/]").Centered(), new Text(""));
             UI.Refresh();
             Thread.Sleep(3800);
             mygrid.AddRow(new Text(""), new Markup("[red]Guard yourself you cute monster![/]").Centered(), new Text(""));
@@ -376,7 +377,13 @@ public sealed class LevelOne
         UIOperator.DestroyBuffer();
 
 
-
+        SaveFile saveFile = new SaveFile();
+        saveFile.UnlockedLevels = LevelUnlock.Level2;
+        
+        if (saveFile.Save())
+        {
+            AnsiConsole.Write(UIOperator.ColoredStringBuilder("[salmon1]", "You have unlocked Level 2 in the chapter select! Moving forward, when you beat a level, you unlock it aswell in chapter select too"));
+        }
 
 
 

@@ -4,6 +4,7 @@ using System.Xml.Schema;
 using D5BF9U;
 using D5BF9U.AutoTasks;
 using D5BF9U.Handlers;
+using D5BF9U.Skills;
 using Spectre.Console;
 
 /*
@@ -39,6 +40,104 @@ AnsiConsole.Live(valami)
 
 string[] nem = new[] { "ceh", "nem", "igen", "minek" };
 
+/*
+Tree NewView(ISkill skill)
+        {
+            string rootColor = "[darkorange]";
+            string childColor = "[orangered1]";
+            Tree view = new Tree(UIOperator.ColoredStringBuilder(rootColor,skill.Title));
+            
+            var isHarmful = view.AddNode(new Markup(UIOperator.ColoredStringBuilder(rootColor, "Harmful")));
+            var isHarmfulChild = isHarmful.AddNode(new Markup(UIOperator.ColoredStringBuilder(childColor, skill.IsHarmful.ToString())));
+
+            var value = view.AddNode(new Markup(UIOperator.ColoredStringBuilder(rootColor, "Value")));
+            //im putting a note here: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator , https://stackoverflow.com/questions/69730874/c-sharp-null-conditional-in-ternary-condition
+            var valueChild= value.AddNode(new Markup(UIOperator.ColoredStringBuilder(childColor, skill.Value?.ToString() ?? "NULL")));
+            
+            var effectiveRate =view.AddNode(new Markup(UIOperator.ColoredStringBuilder(rootColor, "Effectiveness")));
+            var effectiveRateChild = effectiveRate.AddNode(new Markup(UIOperator.ColoredStringBuilder(childColor, $"{skill.EffectiveRate * 100}%")));
+            
+            var description =view.AddNode(new Markup(UIOperator.ColoredStringBuilder(rootColor, "Description")));
+            var descriptionChild = description.AddNode(new Markup(UIOperator.ColoredStringBuilder(childColor, skill.Description)));
+            
+            return view;
+        }
+
+        int KeyHandler(ConsoleKeyInfo input,ref int index, int arrayLength)
+        {
+            if (input.Key is ConsoleKey.RightArrow or ConsoleKey.D)
+            {
+                index = (index + 1) % arrayLength;
+            }
+
+            if (input.Key is ConsoleKey.A or ConsoleKey.LeftArrow)
+            {
+                if (index==0)
+                {
+                    index = arrayLength - 1;
+                }
+                else
+                {
+                    index--;
+                }
+            }
+
+            return index;
+        }
+
+        int outerIndex = 0;
+        SkillLoader skills = new SkillLoader();
+        var skillArray = skills.Skills.Values.ToArray();
+        int length = skillArray.Length;
+        Console.Clear();
+        Tree skillView = NewView(skillArray[outerIndex]);
+        ConsoleKeyInfo keyInfo;
+Table wrapping = new Table();
+wrapping.AddColumn(" ");
+wrapping.AddRow(skillView);
+wrapping.NoBorder();
+wrapping.NoSafeBorder();
+AnsiConsole.Live(wrapping).Start(ui =>
+{
+    do
+    {
+        ui.UpdateTarget(wrapping);
+        ui.Refresh();
+        keyInfo = Console.ReadKey(true);
+        if (keyInfo.Key == ConsoleKey.A || keyInfo.Key == ConsoleKey.D || keyInfo.Key == ConsoleKey.RightArrow ||
+            keyInfo.Key == ConsoleKey.LeftArrow)
+        {
+
+          //  Console.WriteLine("na most?");
+            wrapping.UpdateCell(0,0,skillView = NewView(skillArray[KeyHandler(keyInfo, ref outerIndex, length)]));
+        }
+    } while (keyInfo.Key != ConsoleKey.Backspace);
+
+    Console.WriteLine("escape pressed");
+});*/
+/*
+do
+{
+    AnsiConsole.Write(skillView);
+    keyInfo = Console.ReadKey();
+    if (keyInfo.Key == ConsoleKey.A || keyInfo.Key == ConsoleKey.D || keyInfo.Key == ConsoleKey.RightArrow ||
+        keyInfo.Key == ConsoleKey.LeftArrow)
+    {
+        Console.WriteLine("ide is");
+        skillView.Expanded = false;
+        skillView = NewView(skillArray[KeyHandler(keyInfo, ref outerIndex, length)]);
+    }
+} while (keyInfo.Key != ConsoleKey.Escape);
+*/
+
+
+Tree view = new Tree("na");
+
+var nnnnnnnnn = view.AddNode(new Markup("[red]igen[/]"));
+var isHarmful = view.AddNode("helloo");
+var isHarmfulValue = isHarmful.AddNode("na megvan?");
+
+AnsiConsole.Write(view);
 Table root = new Table();
 root.AddColumn("").Width(40);
 /*root.AddColumn("");
@@ -82,7 +181,7 @@ string valami = "";
 byte[] tmp= {0x79,0x6F,0x75,0x27,0x76,0x65,0x20,0x6A,0x75,0x73,0x74,0x20,0x61,0x63,0x71,0x75,0x69,0x72,0x65,0x64,0x20,0x61,0x20,0x6E,0x65,0x77,0x20,0x73,0x65,0x78,0x20,0x6F,0x62,0x6A,0x65,0x63,0x74,0x21};
 //root.UpdateCell(0,2,)
 Console.WriteLine(Encoding.ASCII.GetString(tmp));
-AnsiConsole.Live(root).Start(ui =>
+/*AnsiConsole.Live(root).Start(ui =>
 {
     while (true)
     {
@@ -108,9 +207,9 @@ AnsiConsole.Live(root).Start(ui =>
        // Console.ReadKey();
         
             /*root.Rows.Update(0,0,
-    ui.UpdateTarget(root.UpdateCell(0));*/ ;
+    ui.UpdateTarget(root.UpdateCell(0));#1# ;
     }
-});
+});*/
 
 /*string valami = "hello";
 string tmp = valami;*/

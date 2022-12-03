@@ -43,15 +43,24 @@ public sealed class LevelHandler
                 {
                     return;
                 }
+                case MainMenuOptions.Library:
+                {
+                    LevelZero.Level_0_library(localSwitch);
+                    break; 
+                }
+                case MainMenuOptions.Level1:
+                {
+                    return;
+                }
+                case MainMenuOptions.Level2:
+                {
+                    throw new NotImplementedException("level 2 is not yet implemented");
+                    return;
+                }
                 case MainMenuOptions.ChapterSelect:
                 {
                     LevelZero.Level_0_chapter_select(localSwitch);
                     break;
-                }
-                case MainMenuOptions.Library:
-                {
-                    
-                    break; //todo this will be the skills list
                 }
                 case MainMenuOptions.Exit:
                 {
@@ -59,7 +68,7 @@ public sealed class LevelHandler
                 }
                 default:
                 {
-                    throw new Exception("Level handler has unexpected case.");
+                    throw new Exception($"Level handler has unexpected case : {localSwitch}");
                 }
             }
         }
