@@ -53,10 +53,14 @@ public sealed class CounterBuff : IStatusAilment
 
     public void TakeAction(Creature self, Creature target, string value)
     {
-        if (value.Equals("Block"))
+        if (CurrentTicks==1)
         {
-            target.TakeDmg(CounterValue);
-           // Deactivate(self, target);
+            if (value.Equals("Block"))
+            {
+                target.TakeDmg(CounterValue);
+                ++CurrentTicks;
+                // Deactivate(self, target);
+            }
         }
     }
 

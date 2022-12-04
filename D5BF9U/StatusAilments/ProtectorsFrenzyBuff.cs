@@ -11,6 +11,8 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
     public string Name => "Protectors Frenzy";
     public int DurationMillisec => 4200;
     public double Value => 3.2;
+
+    public double HasteValue => -0.5;
     public int? MaxTicks => null;
     public int CurrentTicks { get; set; }
     public bool IsHarmful => false;
@@ -41,6 +43,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
         });
         if (!alreadyExists)
         {
+            self.SetHaste(HasteValue);
             self.SetDamageDoneMultiplier(Value);
         }
     }
@@ -65,6 +68,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
         if (self.StatusAilments.TryRemove(Name, out _))
         {
             self.SetDamageDoneMultiplier(-Value);
+            self.SetHaste(-HasteValue);
         }
     }
 }
