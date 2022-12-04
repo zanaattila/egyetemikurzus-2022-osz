@@ -16,8 +16,7 @@ public sealed class BlockBuff : IStatusAilment
     public int CurrentTicks { get; set; }
     public bool IsHarmful => false;
     public bool IsDisplayed => true;
-
-    //damn, took me long enough to get this
+    
     public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.WhenStruck, StatusAilmentTypes.ActionIntegerValueRequired };
 
     public DateTime TimeOfAcquisition { get; init; }
@@ -38,7 +37,6 @@ public sealed class BlockBuff : IStatusAilment
     {
         self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
         {
-            //well this is a syntax i didnt expect
             return this;
         });
         
@@ -76,14 +74,14 @@ public sealed class BlockBuff : IStatusAilment
     /// <param name="self"></param>
     /// <param name="target"></param>
     /// <param name="value"></param>
-    public void TakeAction(Creature self, Creature target, ref double? value) //todo consider TakeAction to make it a bool instead of a void so can check on the success of it in the caller, yes i will do this, tomorrow
+    public void TakeAction(Creature self, Creature target, ref double? value) 
     {
-        CounterBuff buffUp = new CounterBuff(value is not null ? (int)value : 0);//and now 
+        CounterBuff buffUp = new CounterBuff(value is not null ? (int)value : 0);
         ProtectorsFrenzyBuff frenzyBuff = new ProtectorsFrenzyBuff();
         buffUp.RequestAction(self,target);
         frenzyBuff.RequestAction(self,target);
         self.PersonalCombatLog.LogAction(String.Empty, 0,false,false,$"BLOCKED ~( {value} )~");
-        value = 0;//just in case;  and i think i was right 
+        value = 0;
         Deactivate(self,target);
     }
 
@@ -95,6 +93,5 @@ public sealed class BlockBuff : IStatusAilment
     public void Deactivate(Creature self, Creature target)
     {
         self.StatusAilments.TryRemove(Name, out _);
-        //maybe i should log if it wasnt successful to remove
     }
 }

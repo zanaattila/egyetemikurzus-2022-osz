@@ -15,7 +15,7 @@ public sealed class SkillTasker
     /// <returns></returns>
     public async Task<Creature> SkillExecuter(Creature player, Creature npc)
     {
-        SkillQue swapper = new SkillQue(null,null,null); //hope you work
+        SkillQue swapper = new SkillQue(null,null,null); 
         while (player.GetHealth() > 0 && npc.GetHealth() > 0)
         {
             if (player.SkillQues.TryDequeue(out swapper))

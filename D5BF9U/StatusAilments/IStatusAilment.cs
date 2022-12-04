@@ -16,20 +16,14 @@ public interface IStatusAilment
      StatusAilmentTypes[] Types { get; }
      DateTime TimeOfAcquisition { get; init; }
      
-     //public bool TakeActionOnActivation { get; } might not need it
-     
-
-
      void RequestAction(Creature self, Creature target);
 
      void Activate(Creature self, Creature target);
      
-     void TakeAction(Creature self, Creature target); //nevermind, ill just overload it 
+     void TakeAction(Creature self, Creature target);  
      
-     void TakeAction(Creature self, Creature target, ref double? value); //instead of overloading, im making it optional
+     void TakeAction(Creature self, Creature target, ref double? value);
      void TakeAction(Creature self, Creature target, string value);
-     //actually i do have to overload it, with string >< for the name of the skill, could use skill ID,..... 
-     //but without db auto increment id just simply miss track of which was the last one ><
 
      void Deactivate(Creature self, Creature target); 
 

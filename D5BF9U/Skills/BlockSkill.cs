@@ -11,7 +11,7 @@ public class BlockSkill : ISkill
     public bool AffectedByGCD => true;
     public bool IsHarmful => false;
 
-    public int? Value => null; //could've been null tho..., nah nvm
+    public int? Value => null; 
     public double EffectiveRate => 0;
 
     public string Description =>
@@ -23,7 +23,6 @@ public class BlockSkill : ISkill
     
     public void RequestAction(Creature self, Creature target)
     {
-        //in theory since they all are from the same interface then they should be able to be stored, but i hope conversion will go smooth and nut just throw a random null exception at me
         SkillQue queMe = new SkillQue(this, self, target);
         self.SkillQues.Enqueue(queMe);
     }

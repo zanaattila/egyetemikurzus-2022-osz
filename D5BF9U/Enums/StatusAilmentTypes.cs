@@ -6,7 +6,7 @@ namespace D5BF9U.Enums;
 public enum StatusAilmentTypes 
 {
     OnHit,
-    WhenStruck,//i dont think ill need Absorb, or do i
+    WhenStruck,
     Absorb,
     OnSkillUse,
     Buff,

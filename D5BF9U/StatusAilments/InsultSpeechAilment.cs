@@ -15,8 +15,7 @@ public sealed class InsultSpeechAilment : IStatusAilment
     public bool IsHarmful => false;
     public bool IsDisplayed => false;
     public string[] Speech { get; set;}
-    public int SpeechIndex { get; set; } // yes really
-        //public bool TakeActionOnActivation 
+    public int SpeechIndex { get; set; } 
     public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.OverTimeEffect };
     public DateTime TimeOfAcquisition { get; init; }
 

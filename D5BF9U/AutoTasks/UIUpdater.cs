@@ -24,18 +24,17 @@ public sealed class UIUpdater
     private Panel CreaturePanel(Creature creature)
     {
         //this is the log
-        //this isnt thread safe i guess, but im just reading so  ¯\_(ツ)_/¯ not that crucial
+        //this isnt thread safe i guess, but im just reading so  it shouldnt cause problems
         return new Panel(UIOperator.IntoALineWithNewLine(creature.PersonalCombatLog.PlaceHolders));
     }
     private BarChart[] CreatureBarChartMaker(Creature creature)
     {
         List<BarChart> barCharts = new List<BarChart>();
         barCharts.Add(new BarChart().AddItem("Health", creature.GetHealth(),Color.Green).WithMaxValue(creature.GetMaxHealth()));
-        //well this is ugly, but i just realized that a set has no order, so it wont guarantee that i will get the same order for the same buffs, ie: these will jump around causing a seizure
         foreach (var item in creature.StatusAilments.ToArray().OrderDescending())
         {
             barCharts.Add(new BarChart().AddItem(item.Key,
-                Math.Round((item.Value.DurationMillisec - (DateTime.Now.Subtract(item.Value.TimeOfAcquisition).TotalMilliseconds)) * 0.01,0), //divided by 100 so 2 digits shown, scratch that, multiplication is faster
+                Math.Round((item.Value.DurationMillisec - (DateTime.Now.Subtract(item.Value.TimeOfAcquisition).TotalMilliseconds)) * 0.01,0),
                 Color.Aquamarine1).WithMaxValue(Math.Round((item.Value.DurationMillisec*0.01),0)));
         }
 
@@ -66,9 +65,6 @@ public sealed class UIUpdater
             new Markup(UIOperator.ColoredStringBuilder(CatColor,Npc.GetSpeechBox(),EndTag))
         });
         
-        //this might cause error
-
-
         retme.AddRow(new Markup[]
         {
             new Markup(UIOperator.ColoredStringBuilder(PlayerColor,Player.GetSpeechBox(),EndTag)),
@@ -100,7 +96,6 @@ public sealed class UIUpdater
     {
         string space8 = "        "; //8 times 
         int counter = 1;
-        //IOrderedEnumerable<string> skills = Player.SkillLists.Keys.ToList().OrderDescending();
         StringBuilder sb = new StringBuilder();
         foreach (var skill in Player.SkillKeysOrdered)
         {

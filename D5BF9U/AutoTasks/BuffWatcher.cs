@@ -15,8 +15,6 @@ public sealed class BuffWatcher
         {
             if (!player.StatusAilments.IsEmpty)
             {
-                //ill have to check if this makes the gc gets called all the time leading to a memory leak   
-                //ICollection<string> keys = player.StatusAilments.Keys;
                 foreach (var key in player.StatusAilments.Keys)
                 {
                     if (player.StatusAilments[key].Types.Contains(StatusAilmentTypes.OverTimeEffect))
@@ -64,7 +62,6 @@ public sealed class BuffWatcher
                     }
                 }
             }
-            //blyatiful code duplication...
         }
         return (npc.GetHealth() == 0 ? player : npc );
     }

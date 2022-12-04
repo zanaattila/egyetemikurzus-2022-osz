@@ -33,7 +33,7 @@ public sealed class LevelZero
                 }));
 
         switch (UIOperator.ColoredStringDemolisher(choiceColor,selected,endTag))
-        {// i should use a better approach, but its good for now, atleast will have something to refactor later
+        {
             case "Start New Game":
                 Globals.Globals.MySwitch = LevelAdjustingSwitch.LevelOne;
                 optionsContainer.SelectedOption = MainMenuOptions.Level1;
@@ -107,8 +107,7 @@ public sealed class LevelZero
         int length = skillArray.Length;
         Console.Clear();
         Tree skillView = NewView(skillArray[outerIndex]);
-        ConsoleKeyInfo keyInfo; //took me a while to realize first: this needs a wrapper root node cos of reference
-        //and second: i can set exit to escape, yes its intuitive, but you cant debug it and it doesnt work in a terminal...
+        ConsoleKeyInfo keyInfo; 
         Table wrapper = new Table();
         wrapper.AddColumn(" ");
         wrapper.AddRow(skillView);
@@ -164,7 +163,7 @@ public sealed class LevelZero
                 .PageSize(5)
                 .HighlightStyle(new Style().Foreground(Color.Orange1))
                 .MoreChoicesText(
-                    "[green](Move up and down to reveal more fruits)[/]") //this line of code doesnt even do anything
+                    "[green](Move up and down to reveal more fruits)[/]") 
                 .AddChoices(Builder()));
 
 

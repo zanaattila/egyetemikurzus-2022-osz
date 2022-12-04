@@ -1,4 +1,5 @@
 using System.ComponentModel.Design.Serialization;
+using D5BF9U.Containers;
 using D5BF9U.Creatures;
 
 namespace D5BF9U.Skills;
@@ -16,11 +17,13 @@ public sealed class CatClawSkill : ISkill
     public bool IsHarmful => true;
     public void RequestAction(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        SkillQue queMe = new SkillQue(this, self, target);
+        self.SkillQues.Enqueue(queMe);
     }
 
     public void CastMe(Creature self, Creature target)
     {
-        throw new NotImplementedException();
+        target.TakeDmg(self.DealDmg(Title));
+        self.SetLastGCDTrigger();
     }
 }

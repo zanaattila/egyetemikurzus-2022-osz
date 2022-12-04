@@ -10,9 +10,6 @@ namespace D5BF9U;
 
 public sealed class Game
 {
-    
-    
-    
     public static async Task GameOn()
     {
         MyLoader.FirstLoad();

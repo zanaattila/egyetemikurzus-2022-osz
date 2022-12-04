@@ -80,7 +80,6 @@ public sealed class LevelOne
         mygrid.AddColumn();
         AnsiConsole.Live(mygrid).Start(UI =>
         {
-            //mygrid.Columns = new GridColumn();
             UI.Refresh();
             mygrid.AddRow(new Markup(cat).LeftAligned(),new Markup(" ").Centered(),new Markup(player).RightAligned());
             UI.Refresh();
@@ -384,8 +383,7 @@ public sealed class LevelOne
         {
             AnsiConsole.Write(UIOperator.ColoredStringBuilder("[salmon1]", "You have unlocked Level 2 in the chapter select! Moving forward, when you beat a level, you unlock it aswell in chapter select too"));
         }
-
-
+        
 
         Console.WriteLine("you reached the end so far, go back");
         Console.ReadKey();

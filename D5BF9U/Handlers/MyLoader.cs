@@ -15,9 +15,7 @@ public sealed class MyLoader
             .Start("[mediumvioletred]loading deviancy[/]", ctx => 
             {
                 Globals.Globals.MySwitch = 0;
-                //todo later when saves or unlocks are done, implement the chapter system too, along with the library
-                
-                //todo for faster production ima reduce these to tenth of a value, 
+                //todo for production the value reduced
                 Thread.Sleep(100);
                 AnsiConsole.MarkupLine("are you sure you want to play this?");
                 Thread.Sleep(200);

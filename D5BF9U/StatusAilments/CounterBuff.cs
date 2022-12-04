@@ -48,7 +48,6 @@ public sealed class CounterBuff : IStatusAilment
 
     public void TakeAction(Creature self, Creature target,ref double? value)
     {
-        //how am i going to implement this....
         throw new BuffTakeActionError(Name);
     }
 
@@ -64,6 +63,6 @@ public sealed class CounterBuff : IStatusAilment
 
     public void Deactivate(Creature self, Creature target)
     {
-        self.StatusAilments.TryRemove(Name, out _); //i hope the syntax sugar works!
+        self.StatusAilments.TryRemove(Name, out _); 
     }
 }

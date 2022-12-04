@@ -16,17 +16,10 @@ public sealed class CreatureLog
     string DamageColor => "[maroon]";
     string HealColor => "[green]";
     string EndTag => "[/]";
-    //public Table LogView { get; set; }
     public string[] PlaceHolders { get; set; }
 
     public CreatureLog(int howManyRows=5)
     {
-        //LogView = new Table();
-        //LogView.AddColumn("Combat Log");
-        //for (int i = 0; i < howManyRows; i++)
-        //{
-        //LogView.AddRow("");
-        //}
         PlaceHolders = new string[howManyRows];
     }
 
@@ -51,8 +44,6 @@ public sealed class CreatureLog
                 retvalBuilder.Append(UIOperator.ColoredStringBuilder(TextColor, " healed for ", EndTag));
                 retvalBuilder.Append(UIOperator.ColoredStringBuilder(HealColor, value.ToString(), EndTag));
             }
-            /*$"{name} taken {value} damage";
-            $"{name} healed for {value}";*/
         }
         else
         {

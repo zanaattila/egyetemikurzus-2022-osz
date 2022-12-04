@@ -3,8 +3,6 @@ using D5BF9U.Skills;
 
 namespace D5BF9U.Containers;
 
-
-//this is an immutable class as i see it, cos the reference of the creature will not change, tho the creatures value can change, hmmmmm todo ask if this is an immutable
 public sealed class SkillQue
 {
     public ISkill Skill { get; }

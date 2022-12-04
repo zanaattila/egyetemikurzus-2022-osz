@@ -20,7 +20,6 @@ public sealed class MagicSkill : ISkill
     
     public void RequestAction(Creature self, Creature target)
     {
-        //in theory since they all are from the same interface then they should be able to be stored, but i hope conversion will go smooth and nut just throw a random null exception at me
         SkillQue queMe = new SkillQue(this, self, target);
         self.SkillQues.Enqueue(queMe);
     }

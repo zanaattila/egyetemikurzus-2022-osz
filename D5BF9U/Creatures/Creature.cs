@@ -11,13 +11,11 @@ namespace D5BF9U.Creatures;
 
 public sealed class Creature
 {
-    //damn, do i have to make everything interlocked? hope im on the right track
-    //once again writing all getters and setter by hand
     public string Name { get; init; }
     public string ProfilePic { get; }
     
     public string[] SkillKeysOrdered { get; }
-    public int BaseGlobalCoolDownMs { get; init; } //tbh i should just make it get only
+    public int BaseGlobalCoolDownMs { get; init; } 
     public bool IsAutoAttacking { get; init; }
     public string SpeechBox;
     public int MaxHealth;
@@ -43,9 +41,7 @@ public sealed class Creature
             else Interlocked.CompareExchange(ref _threadSafeBoolBackValue, 0, 1);
         }
     }
-
-    //public DateTime LastGCDTrigger;
-    //people online said to use date time as interlocked its wiser to use it as .tobinary and long
+    
     public long LastGCDTrigger;
 
     public Creature Target { get; set; }
@@ -56,10 +52,7 @@ public sealed class Creature
     public ConcurrentDictionary<string,IStatusAilment> StatusAilments { get; set; }
     public ConcurrentDictionary<string,ISkill> SkillLists { get; set; }
 
-
-    //public int  GlobalCD { get; init; } //in millisec
     
-    //todo set speechbox
     public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, int haste,ConcurrentDictionary<string,ISkill> skillLists, string profilePicPath)
     {
         Name = name;
@@ -204,12 +197,7 @@ public sealed class Creature
     {
         Interlocked.CompareExchange(ref SpeechBox, value, SpeechBox);
     }
-
-    /*public void SetSpeechBox(string value)
-    {
-        Interlocked.Exchange(ref SpeechBox, value);
-    }*/
-
+    
 
     public int GetHealth()
     {
@@ -219,7 +207,6 @@ public sealed class Creature
         //Jon Skeet
         //Nov 21, 2009 at 21:01
         return Interlocked.CompareExchange(ref Health, 0, 0);
-        //everyone says i should use this way to read it, tho i have no idea what the last 2 zeros are, what kind of comparison is this? you compare 2 values with 3? its like javascripts boolean -> true or false? the answer is -> undefined
     }
 
     public void SetHealth( int value)
@@ -229,26 +216,20 @@ public sealed class Creature
     }
 
 
-    public void TakeDmg(double? value)// might need to be boolean
+    public void TakeDmg(double? value)
     {
         double? damageTake = value * GetDamageTakenMultiplier();
-        //CheckForStatusAilment(StatusAilmentTypes.Immune,"_NONE_", ref damageTake); i think ill just remove the immune type
         CheckForStatusAilment(StatusAilmentTypes.WhenStruck,"_NONE_", ref damageTake);
         CheckForStatusAilment(StatusAilmentTypes.Absorb,"_NONE_", ref damageTake);
         if (damageTake is not null  && damageTake !=0)
         {
             int dmg = (int)damageTake;
-            //so ive read up about it, and it says nullables are not atomic, so ill ask next time how to use these, or are these thread safe at all
-            //oh fuck now i get it, it must not have properties because it must be reached via interlocked!
-            /*Interlocked.Increment(ref this.Health);
-            Interlocked.Exchange(ref Health, tmpHp);*/
-            //Interlocked.Add(ref Health,-Math.Max(0, dmg));
             SetHealth(-dmg);
             PersonalCombatLog.LogAction(Name,dmg,true);
         }
     }
 
-    public void AilmentTakeAction(IStatusAilment  buff,string whichSkill, ref double? damageDeal) //this breaks the pattern cos called in here and not by its scheduler
+    public void AilmentTakeAction(IStatusAilment  buff,string whichSkill, ref double? damageDeal) 
     {
         if (buff.Types.Contains(StatusAilmentTypes.ActionIntegerValueRequired))
         {
@@ -290,33 +271,7 @@ public sealed class Creature
                 : 0);
 
             CheckForStatusAilment(StatusAilmentTypes.OnSkillUse, whichSkill, ref damageDeal);
-
-            /*if (StatusAilments.Any( sa => sa.Value.Types.Contains(StatusAilmentTypes.OnSkillUse)))
-            {
-                var buffs2Activate =
-                    StatusAilments.Values.Where(sa => sa.Types.Contains(StatusAilmentTypes.OnSkillUse));
-
-                foreach (var buff in buffs2Activate)
-                {
-                    if (buff.Types.Contains(StatusAilmentTypes.ActionIntegerValueRequired))
-                    {
-                        buff.TakeAction(this,Target,ref  damageDeal );
-                        //what could take a value during initiating dmg when the class itself gets passed too?
-                        //todo, delete it later when its tested and works
-                        
-                    }else if (buff.Types.Contains(StatusAilmentTypes.ActionStringValueRequired))
-                    {
-                        buff.TakeAction(this,Target,whichSkill);
-                    }
-                    else //else, call the default take action
-                    {
-                        buff.TakeAction(this,Target);
-                    }
-                    //todo, make this a function? i guess
-                }
-            }
-            */
-
+            
             return damageDeal;
         }
         else
