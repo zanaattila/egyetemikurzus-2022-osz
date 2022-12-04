@@ -149,6 +149,7 @@ public sealed class UIUpdater
 
         AnsiConsole.Live(wrapperRoot).Start(ui =>
         {
+            ui.Refresh();
             while (Npc.GetHealth()> 0 && Player.GetHealth() >0 )
             {
                 
@@ -159,7 +160,7 @@ public sealed class UIUpdater
                 wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
                 //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
                 wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
-                
+                ui.Refresh();
                 Thread.Sleep(14); //to give it near 60 fps
             }
             
