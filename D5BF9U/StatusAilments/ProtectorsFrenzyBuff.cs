@@ -15,15 +15,16 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
     public int CurrentTicks { get; set; }
     public bool IsHarmful => false;
     public bool IsDisplayed => true;
-    
+
     public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.Buff, StatusAilmentTypes.DamageIncrease };
     public DateTime TimeOfAcquisition { get; init; }
 
     public ProtectorsFrenzyBuff()
     {
         TimeOfAcquisition = new DateTime();
-        TimeOfAcquisition = DateTime.Now;   
+        TimeOfAcquisition = DateTime.Now;
     }
+
     public void RequestAction(Creature self, Creature target)
     {
         StatusAilmentQue ailmentQue = new StatusAilmentQue(this, self, target);
@@ -33,7 +34,7 @@ public sealed class ProtectorsFrenzyBuff : IStatusAilment
     public void Activate(Creature self, Creature target)
     {
         bool alreadyExists = false;
-        self.StatusAilments.AddOrUpdate(Name,this, (key,value) =>
+        self.StatusAilments.AddOrUpdate(Name, this, (key, value) =>
         {
             alreadyExists = true;
             return this;

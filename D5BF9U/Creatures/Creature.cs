@@ -21,7 +21,7 @@ public sealed class Creature
     public int MaxHealth;
     public int Health;
     public int Strength;
-    public int Haste;//value is 1 on default, with 50% increase it gets 0.5, 0 mean no gcd at all
+    public double Haste;//value is 1 on default, with 50% increase it gets 0.5, 0 mean no gcd at all
     //for methods like these ill make a setter so it doesnt go below 0
     public double DamageDoneMultiplier;
     public double DamageTakenMultiplier; //default = 1; doesnt go below zero 
@@ -53,7 +53,7 @@ public sealed class Creature
     public ConcurrentDictionary<string,ISkill> SkillLists { get; set; }
 
     
-    public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, int haste,ConcurrentDictionary<string,ISkill> skillLists, string profilePicPath)
+    public Creature(string name, int baseGlobalCoolDownMs, bool isAutoAttacking, int maxHealth, int strength, double haste,ConcurrentDictionary<string,ISkill> skillLists, string profilePicPath)
     {
         Name = name;
         BaseGlobalCoolDownMs = baseGlobalCoolDownMs;
@@ -144,14 +144,14 @@ public sealed class Creature
     
     
 
-    public int GetHaste()
+    public double GetHaste()
     {
         return Interlocked.CompareExchange(ref Haste, 0, 0);
     }
     
-    public void SetHaste( int value)
+    public void SetHaste( double value)
     {
-        int tmp = Math.Max(GetHaste() + value,0);
+        double tmp = Math.Max(GetHaste() + value,0);
         Interlocked.CompareExchange(ref Haste, tmp,Haste );
     }
     
@@ -284,15 +284,37 @@ public sealed class Creature
     public bool ActionRequester(string whichSkill)
     {
         
-        if ( (DateTime.Now.Subtract(GetLastGCDTrigger()).TotalMilliseconds>BaseGlobalCoolDownMs*Haste || !SkillLists[whichSkill].AffectedByGCD )
-            && SkillLists.Keys.Contains(whichSkill))
+        if ( (DateTime.Now.Subtract(GetLastGCDTrigger()).TotalMilliseconds>BaseGlobalCoolDownMs*Haste || !SkillLists[whichSkill].AffectedByGCD  )
+             && SkillLists.Keys.Contains(whichSkill))
         {
             SkillLists[whichSkill].RequestAction(this,Target);
             return true;
         }
+        else if(!StatusAilments.IsEmpty)
+        {
+            var ailments = StatusAilments.Values;
+            foreach (var buffDebuff in ailments)
+            {
+                if (buffDebuff.Types.Contains(StatusAilmentTypes.OnSkillUse) &&
+                    buffDebuff.Types.Contains(StatusAilmentTypes.OffGlobalInstant))
+                {
+                    if (buffDebuff.Types.Contains(StatusAilmentTypes.ActionStringValueRequired))
+                    {
+                        buffDebuff.TakeAction(this, Target, whichSkill);
+                    }
+                    else
+                    {
+                        buffDebuff.TakeAction(this, Target);
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+            return false;
+        }
         else
         {
-            //todo log its on cooldown
             return false;
         }
     }
@@ -304,7 +326,7 @@ public sealed class Creature
         {
             int heal = (int)healTake;
             SetHealth(heal);
-            PersonalCombatLog.LogAction(Name,heal,true);
+            PersonalCombatLog.LogAction(Name,heal,false);
         }
     }
 

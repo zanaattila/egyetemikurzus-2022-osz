@@ -9,6 +9,7 @@ public enum StatusAilmentTypes
     WhenStruck,
     Absorb,
     OnSkillUse,
+    OffGlobalInstant,
     Buff,
     DamageIncrease,
     ActionIntegerValueRequired,

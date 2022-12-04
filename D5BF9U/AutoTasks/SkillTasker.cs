@@ -18,7 +18,7 @@ public sealed class SkillTasker
         SkillQue swapper = new SkillQue(null,null,null);
         await Task.Run(() =>
         {
-
+            Thread.Sleep(3);
 
             while (player.GetHealth() > 0 && npc.GetHealth() > 0)
             {

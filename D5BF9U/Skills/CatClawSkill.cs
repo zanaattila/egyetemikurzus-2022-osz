@@ -13,7 +13,7 @@ public sealed class CatClawSkill : ISkill
 
     public int? Value => 4;
     public double EffectiveRate => 0.69;
-    public bool AffectedByGCD => false;
+    public bool AffectedByGCD => true;
     public bool IsHarmful => true;
     public void RequestAction(Creature self, Creature target)
     {

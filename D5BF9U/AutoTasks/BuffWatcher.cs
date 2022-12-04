@@ -22,7 +22,7 @@ public sealed class BuffWatcher
                         {
                             if ((player.StatusAilments[key].DurationMillisec / player.StatusAilments[key].MaxTicks) *
                                 player.StatusAilments[key].CurrentTicks
-                                < DateTime.Now.Subtract(player.StatusAilments[key].TimeOfAcquisition).Milliseconds)
+                                < DateTime.Now.Subtract(player.StatusAilments[key].TimeOfAcquisition).TotalMilliseconds)
                             {
                                 if (player.StatusAilments[key].CurrentTicks <= player.StatusAilments[key].MaxTicks)
                                 {
@@ -30,13 +30,21 @@ public sealed class BuffWatcher
                                 }
                                 else
                                 {
-                                    player.StatusAilments[key].Deactivate(player, player.Target);
+                                    //doesnt deactivate
+                                   // player.StatusAilments[key].Deactivate(player, player.Target);
                                 }
 
 
                                 //todo i just now realized that since i store the target, it should no longer be needed to pass it as param...
                             }
+                        }
 
+                        if ( player.StatusAilments.ContainsKey(key))
+                        {
+                            if ( (player.StatusAilments[key].DurationMillisec < DateTime.Now.Subtract(player.StatusAilments[key].TimeOfAcquisition).TotalMilliseconds ))
+                            {
+                                player.StatusAilments[key].Deactivate(player, player.Target);
+                            }
                         }
                     }
                 }
@@ -50,7 +58,7 @@ public sealed class BuffWatcher
                         {
                             if ((npc.StatusAilments[key].DurationMillisec / npc.StatusAilments[key].MaxTicks) *
                                 npc.StatusAilments[key].CurrentTicks
-                                < DateTime.Now.Subtract(npc.StatusAilments[key].TimeOfAcquisition).Milliseconds)
+                                < DateTime.Now.Subtract(npc.StatusAilments[key].TimeOfAcquisition).TotalMilliseconds)
                             {
                                 if (npc.StatusAilments[key].CurrentTicks <= npc.StatusAilments[key].MaxTicks)
                                 {
@@ -58,13 +66,29 @@ public sealed class BuffWatcher
                                 }
                                 else
                                 {
-                                    npc.StatusAilments[key].Deactivate(npc, npc.Target);
+                                    //npc.StatusAilments[key].Deactivate(npc, npc.Target);
                                 }
+                            }
+                        }
+
+                        if (npc.StatusAilments.ContainsKey(key))
+                        {
+                            if ( (npc.StatusAilments[key].DurationMillisec < DateTime.Now.Subtract(npc.StatusAilments[key].TimeOfAcquisition).TotalMilliseconds ))
+                            {
+                                npc.StatusAilments[key].Deactivate(npc, npc.Target);
                             }
                         }
                     }
                 }
+                
+                
+                //problem might be it no longer exists and bugs
+                /*foreach (var VARIABLE in COLLECTION)
+                {
+                    
+                }*/
             }
+            
         });
         return (npc.GetHealth() == 0 ? player : npc );
     }

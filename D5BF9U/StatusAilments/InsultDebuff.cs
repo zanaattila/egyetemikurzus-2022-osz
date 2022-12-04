@@ -17,7 +17,7 @@ public sealed class InsultDebuff : IStatusAilment
     
     public Creature Self { get; set; }
     public Creature Target { get; set; }
-    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.Debuff,StatusAilmentTypes.DamageOverTime };
+    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.Debuff,StatusAilmentTypes.DamageOverTime,StatusAilmentTypes.OverTimeEffect };
     public DateTime TimeOfAcquisition { get; init; }
 
     public InsultDebuff()

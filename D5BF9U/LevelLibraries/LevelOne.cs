@@ -24,7 +24,7 @@ public sealed class LevelOne
         Creature player = new Creature("Vaento", 1000, false, 300, 4, 1,
             playerSkills,"me.txt");
 
-        Creature enemy = new Creature("Fluffy Hanekawa", 1200, true, 500, 4, 1, enemySkills,
+        Creature enemy = new Creature("Fluffy Hanekawa", 1000, true, 500, 4, 1.2, enemySkills,
             "catto.txt");
 
         player.Target = enemy;

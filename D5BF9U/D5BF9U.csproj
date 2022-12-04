@@ -7,6 +7,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+      <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="Spectre.Console" Version="0.45.0" />
     </ItemGroup>

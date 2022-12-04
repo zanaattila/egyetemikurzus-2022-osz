@@ -10,13 +10,13 @@ namespace D5BF9U.StatusAilments;
 public sealed class CounterBuff : IStatusAilment
 {
     public string Name => "Counter";
-    public int DurationMillisec => 1000;
+    public int DurationMillisec => 1500;
     public int? MaxTicks => 1;
     public int CurrentTicks { get; set; }
     public int CounterValue { get; }
     public bool IsHarmful => false;
     public bool IsDisplayed => true;
-    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.OnSkillUse, StatusAilmentTypes.ActionStringValueRequired };
+    public StatusAilmentTypes[] Types => new[] { StatusAilmentTypes.OnSkillUse, StatusAilmentTypes.ActionStringValueRequired,StatusAilmentTypes.OffGlobalInstant };
     public DateTime TimeOfAcquisition { get; init; }
 
 
@@ -56,9 +56,8 @@ public sealed class CounterBuff : IStatusAilment
         if (value.Equals("Block"))
         {
             target.TakeDmg(CounterValue);
+            Deactivate(self, target);
         }
-        
-        Deactivate(self,target);
     }
 
     public void Deactivate(Creature self, Creature target)

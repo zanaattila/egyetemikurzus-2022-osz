@@ -31,7 +31,8 @@ public sealed class UIUpdater
     {
         List<BarChart> barCharts = new List<BarChart>();
         barCharts.Add(new BarChart().AddItem("Health", creature.GetHealth(),Color.Green).WithMaxValue(creature.GetMaxHealth()));
-        foreach (var item in creature.StatusAilments.ToArray().OrderDescending())
+        var query = creature.StatusAilments.ToArray();
+        foreach (var item in creature.StatusAilments.ToArray())
         {
             barCharts.Add(new BarChart().AddItem(item.Key,
                 Math.Round((item.Value.DurationMillisec - (DateTime.Now.Subtract(item.Value.TimeOfAcquisition).TotalMilliseconds)) * 0.01,0),
@@ -46,8 +47,12 @@ public sealed class UIUpdater
         BarChart retme = new BarChart();
         if (DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds < creature.BaseGlobalCoolDownMs*creature.GetHaste())
         {
-            retme.AddItem("CD", DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds * 0.01)
-                .WithMaxValue(creature.BaseGlobalCoolDownMs * creature.GetHaste() * 0.01);
+            retme.AddItem("CD",
+                Math.Round(DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds * 0.01, 1)).WithMaxValue(creature.BaseGlobalCoolDownMs * creature.GetHaste() * 0.01);
+        }
+        else
+        {
+            retme.AddItem("CD", 0);
         }
 
         return retme;
@@ -120,9 +125,7 @@ public sealed class UIUpdater
             //player tables, right side
 
             Table playerTable = CreatureTableMaker(Player);
-
-
-            //error might occour with rows being blank
+            
 
             //npc tables, right side
             Table npcTable = CreatureTableMaker(Npc);
@@ -148,8 +151,7 @@ public sealed class UIUpdater
             wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
             wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
 
-
-            Console.WriteLine("got here");
+            
             AnsiConsole.Live(wrapperRoot).Start(ui =>
             {
                 ui.Refresh();
@@ -166,7 +168,16 @@ public sealed class UIUpdater
                     ui.Refresh();
                     Thread.Sleep(14); //to give it near 60 fps
                 }
+                
+                wrapperRoot.UpdateCell(0, 0, CreatureTableMaker(Player));
+                wrapperRoot.UpdateCell(0, 1, GridUserInterface());
+                wrapperRoot.UpdateCell(0, 2, CreatureTableMaker(Npc));
 
+                wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
+                //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+                wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+                ui.Refresh();
+                Thread.Sleep(14); //to give it near 60 fps
             });
 
 
