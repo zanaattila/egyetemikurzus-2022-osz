@@ -56,7 +56,7 @@ public sealed class CounterBuff : IStatusAilment
         if (value.Equals("Block"))
         {
             target.TakeDmg(CounterValue);
-            Deactivate(self, target);
+           // Deactivate(self, target);
         }
     }
 

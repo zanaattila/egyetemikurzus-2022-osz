@@ -76,13 +76,18 @@ public sealed class BlockBuff : IStatusAilment
     /// <param name="value"></param>
     public void TakeAction(Creature self, Creature target, ref double? value) 
     {
-        CounterBuff buffUp = new CounterBuff(value is not null ? (int)value : 0);
-        ProtectorsFrenzyBuff frenzyBuff = new ProtectorsFrenzyBuff();
-        buffUp.RequestAction(self,target);
-        frenzyBuff.RequestAction(self,target);
-        self.PersonalCombatLog.LogAction(String.Empty, 0,false,false,$"BLOCKED ~( {value} )~");
-        value = 0;
-        Deactivate(self,target);
+        if (CurrentTicks == 1)
+        {
+            CounterBuff buffUp = new CounterBuff(value is not null ? (int)value : 0);
+            ProtectorsFrenzyBuff frenzyBuff = new ProtectorsFrenzyBuff();
+            buffUp.RequestAction(self,target);
+            frenzyBuff.RequestAction(self,target);
+            self.PersonalCombatLog.LogAction(String.Empty, 0,false,false,$"BLOCKED ~( {value} )~");
+            value = 0;
+            ++CurrentTicks;
+        }
+
+        //Deactivate(self,target);
     }
 
     public void TakeAction(Creature self, Creature target, string value)
