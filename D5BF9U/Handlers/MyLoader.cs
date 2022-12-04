@@ -16,13 +16,13 @@ public sealed class MyLoader
             {
                 Globals.Globals.MySwitch = 0;
                 //todo for production the value reduced
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
                 AnsiConsole.MarkupLine("are you sure you want to play this?");
-                Thread.Sleep(200);
+                Thread.Sleep(2000);
                 AnsiConsole.MarkupLine("It contains [red]18+[/] elements");
-                Thread.Sleep(200);
+                Thread.Sleep(2000);
                 AnsiConsole.MarkupLine("yes, even tho its just some ascii stuff");
-                Thread.Sleep(200);
+                Thread.Sleep(2000);
             });
 
         var answer = AnsiConsole.Prompt(new TextPrompt<string>("are you really want to run this game?")

@@ -86,19 +86,19 @@ public sealed class LevelOne
             UI.Refresh();
             mygrid.AddRow(new Markup(cat).LeftAligned(),new Markup(" ").Centered(),new Markup(player).RightAligned());
             UI.Refresh();
-            Thread.Sleep(250);
-            mygrid.AddRow(new Text(""), new Markup("[red]This da evilest da fluffiest catgirl whose hp is 100![/]").Centered(), new Text(""));
+            Thread.Sleep(2500);
+            mygrid.AddRow(new Text(""), new Markup("[red]This da evilest da fluffiest catgirl whose hp is 500![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(430);
+            Thread.Sleep(2300);
             mygrid.AddRow(new Text(""), new Markup("[red]But me and my gruppies will take it on![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(380);
+            Thread.Sleep(2280);
             mygrid.AddRow(new Text(""), new Markup("[red]Guard yourself you cute monster![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(350);
+            Thread.Sleep(2100);
             mygrid.AddRow(new Text(""), new Markup("[red]CHAAAAAAAAAAAAAAAAAAAAAARGE!!![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(230);
+            Thread.Sleep(1800);
         });
         
         
@@ -107,6 +107,7 @@ public sealed class LevelOne
 
     public static void Level_1_Win()
     {
+        Console.Clear();
         Grid mygrid = new Grid();
         mygrid.AddColumn();
         mygrid.Width = 100;
@@ -208,21 +209,21 @@ public sealed class LevelOne
         mygrid.Width = 100;
         mygrid.Centered();
         Console.Clear();
-        
+        string space65 = "                                                                 0;";
         AnsiConsole.Live(mygrid).Start(ui =>
         {
             mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss,"We succeded! Now we shall face a greateest threat of their family!")));
             ui.Refresh();
             Thread.Sleep(3000);
-            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, ".")));
+            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, $" .")));
             ui.Refresh();
-            Thread.Sleep(300);
-            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, ".")));
+            Thread.Sleep(700);
+            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, " .")));
             ui.Refresh();
-            Thread.Sleep(300);
-            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, ".")));
+            Thread.Sleep(700);
+            mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss, " .")));
             ui.Refresh();
-            Thread.Sleep(300);
+            Thread.Sleep(700);
             mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(colorMiss,"Lions!")));
             ui.Refresh();
             Thread.Sleep(3000);
@@ -265,12 +266,13 @@ public sealed class LevelOne
         byte[] text9 =  { 0x2D,0x54,0x68,0x65,0x6E,0x20,0x69,0x74,0x73,0x20,0x64,0x65,0x63,0x69,0x64,0x65,0x64,0x20,0x2D,0x73,0x61,0x69,0x64,0x20,0x74,0x68,0x65,0x20,0x6D,0x69,0x73,0x74,0x72,0x65,0x73,0x73,0x2D,0x21};
         byte[] text10 = { 0x54,0x68,0x65,0x6E,0x20,0x74,0x68,0x65,0x79,0x20,0x68,0x61,0x64,0x20,0x61,0x20,0x68,0x65,0x61,0x6C,0x74,0x68,0x79,0x20,0x67,0x72,0x75,0x70,0x70,0x65,0x6E,0x73,0x65,0x78,0x20,0x61,0x6E,0x64,0x20,0x68,0x65,0x61,0x6C,0x65,0x64,0x20,0x74,0x68,0x65,0x69,0x72,0x20,0x77,0x6F,0x75,0x6E,0x64,0x73,0x20,0x75,0x70};
         
-        AnsiConsole.Write(new Markup(UIOperator.ColoredStringBuilder(waterfallColor,waterfall)));
-        AnsiConsole.WriteLine();
-        Thread.Sleep(3000);
+        
 
         AnsiConsole.Live(mygrid).Start(ui =>
                 {
+                    mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(waterfallColor,$"{waterfall}")));
+                    ui.Refresh();
+                    Thread.Sleep(3000);
                     mygrid.AddRow(new Markup(UIOperator.ColoredStringBuilder(color0,"-Boss,")));
                     ui.Refresh();
                     Thread.Sleep(2800);
@@ -315,6 +317,9 @@ public sealed class LevelOne
         }
 
         StringBuilder sb = new StringBuilder();
+        sb.Append("\n");
+        sb.Append("\n");
+        sb.Append("\n");
         sb.Append(UIOperator.ColoredStringBuilder(colorMiss, "-You dare deny me?"));
         sb.Append("\n");
         Table endCinematic = new Table();
@@ -330,43 +335,51 @@ public sealed class LevelOne
             Thread.Sleep(3000);
             sb.Append(UIOperator.ColoredStringBuilder(color1, Encoding.ASCII.GetString(text2)));
             sb.Append("\n");
-            Thread.Sleep(300);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(300);
+
             sb.Append(UIOperator.ColoredStringBuilder(color2, Encoding.ASCII.GetString(text3)));
             sb.Append("\n");
-            Thread.Sleep(200);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(200);
+
             sb.Append(UIOperator.ColoredStringBuilder(color3, Encoding.ASCII.GetString(text4)));
             sb.Append("\n");
-            Thread.Sleep(186);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(186);
+
             sb.Append(UIOperator.ColoredStringBuilder(color4, Encoding.ASCII.GetString(text5)));
             sb.Append("\n");
-            Thread.Sleep(187);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(187);
+
             sb.Append(UIOperator.ColoredStringBuilder(color5, Encoding.ASCII.GetString(text6)));
             sb.Append("\n");
-            Thread.Sleep(256);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(256);
+
             sb.Append(UIOperator.ColoredStringBuilder(color6, Encoding.ASCII.GetString(text7)));
             sb.Append("\n");
-            Thread.Sleep(314);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(314);
+
             sb.Append(UIOperator.ColoredStringBuilder(color7, Encoding.ASCII.GetString(text8)));
             sb.Append("\n");
-            Thread.Sleep(3000);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
-            
+            ui.Refresh();
+            Thread.Sleep(3000);
+
             sb.Append(UIOperator.ColoredStringBuilder(colorMiss, Encoding.ASCII.GetString(text9)));
             sb.Append("\n");
-            Thread.Sleep(3000);
             endCinematic.UpdateCell(0, 1, new Markup(sb.ToString()));
+            ui.Refresh();
+            Thread.Sleep(3000);
         });
 
         mygrid = new Grid();
@@ -384,12 +397,13 @@ public sealed class LevelOne
         
         if (saveFile.Save())
         {
-            AnsiConsole.Write(UIOperator.ColoredStringBuilder("[salmon1]", "You have unlocked Level 2 in the chapter select! Moving forward, when you beat a level, you unlock it aswell in chapter select too"));
+            AnsiConsole.Write(new Markup(UIOperator.ColoredStringBuilder("[salmon1]", "You have unlocked Level 2 in the chapter select! Moving forward, when you beat a level, you unlock it aswell in chapter select too")));
         }
         
 
-        Console.WriteLine("you reached the end so far, go back");
+        Console.WriteLine("\nyou reached the end so far, go back");
         Console.ReadKey();
+        Globals.Globals.MySwitch = LevelAdjustingSwitch.MainMenu;
 
     }
 

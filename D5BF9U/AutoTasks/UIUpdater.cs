@@ -45,14 +45,15 @@ public sealed class UIUpdater
     private BarChart CooldownBarChart(Creature creature)
     {
         BarChart retme = new BarChart();
+        
         if (DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds < creature.BaseGlobalCoolDownMs*creature.GetHaste())
         {
-            retme.AddItem("CD",
-                Math.Round(DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds * 0.01, 1)).WithMaxValue(creature.BaseGlobalCoolDownMs * creature.GetHaste() * 0.01);
+            retme.AddItem("[green]CD[/]",
+                Math.Round(DateTime.Now.Subtract(creature.GetLastGCDTrigger()).TotalMilliseconds * 0.01, 1),Color.Green).WithMaxValue(creature.BaseGlobalCoolDownMs * creature.GetHaste() * 0.01);
         }
         else
         {
-            retme.AddItem("CD", 0);
+            retme.AddItem("[green]CD[/]", 0,Color.Green);
         }
 
         return retme;
@@ -63,17 +64,24 @@ public sealed class UIUpdater
         Grid retme = new Grid();
         retme.AddColumn(); //one for  pic one for text box
         retme.AddColumn();
+        retme.Alignment(Justify.Center);
 
         retme.AddRow(new Markup[]
         {
             new Markup(UIOperator.ColoredStringBuilder(CatColor,Npc.Name,EndTag)),
             new Markup(UIOperator.ColoredStringBuilder(CatColor,Npc.GetSpeechBox(),EndTag))
         });
+
+        retme.AddRow(new Markup[]
+        {
+            new Markup(" "),//empty row 
+            new Markup(" ")
+        });
         
         retme.AddRow(new Markup[]
         {
-            new Markup(UIOperator.ColoredStringBuilder(PlayerColor,Player.GetSpeechBox(),EndTag)),
-            new Markup(UIOperator.ColoredStringBuilder(PlayerColor,Player.Name,EndTag))
+            new Markup(UIOperator.ColoredStringBuilder(PlayerColor,Player.Name)),
+            new Markup(UIOperator.ColoredStringBuilder(PlayerColor,Player.GetSpeechBox()))
             
         });
         return retme;
@@ -82,6 +90,8 @@ public sealed class UIUpdater
     private Table CreatureTableMaker(Creature creature)
     {
         Table creatureTable = new Table();
+        creatureTable.Border=TableBorder.Square;
+        creatureTable.BorderColor(Color.Green);
         creatureTable.AddColumn(new TableColumn(new Markup(UIOperator.ColoredStringBuilder("[darkmagenta]",creature.Name,"[/]"))));
         for (int i = 0; i < TableRows; i++)
         {
@@ -93,6 +103,7 @@ public sealed class UIUpdater
             creatureTable.UpdateCell(i, 0, creatureBarChart[i]);
         }
         Panel creaturePanel = CreaturePanel(creature);
+        creaturePanel.BorderColor(Color.Green);
         creatureTable.AddRow(creaturePanel); // this row is the last one, so can use it as @tableRows
         return creatureTable;
     }
@@ -134,21 +145,23 @@ public sealed class UIUpdater
             //GUI
             Grid GUI = GridUserInterface();
 
-
             Table wrapperRoot = new Table();
+            wrapperRoot.BorderColor(Color.Green);
+            wrapperRoot.Border=TableBorder.Heavy;
+            //wrapperRoot.Alignment == Justify.Center
             wrapperRoot.AddColumns("if you see this header rendered", "then consider it an easter egg",
-                "cos it means i fucked up bad");
+                "cos it means i fucked up bad").Centered();
             wrapperRoot.HideHeaders();
 
             wrapperRoot.AddEmptyRow();
             wrapperRoot.AddEmptyRow();
 
             wrapperRoot.UpdateCell(0, 0, playerTable);
-            wrapperRoot.UpdateCell(0, 1, GUI);
+            wrapperRoot.UpdateCell(0, 1, GUI).Alignment(Justify.Center);
             wrapperRoot.UpdateCell(0, 2, npcTable);
 
             wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
-            wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+            wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills())).Centered();
             wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
 
             
@@ -176,6 +189,7 @@ public sealed class UIUpdater
                 wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
                 //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
                 wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+                wrapperRoot.Caption(UIOperator.ColoredStringBuilder("[lightsalmon3_1]", "the fight is over\nPress any key to continue"));
                 ui.Refresh();
                 Thread.Sleep(14); //to give it near 60 fps
             });
