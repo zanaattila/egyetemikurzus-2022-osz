@@ -8,19 +8,22 @@ public sealed class BuffTasker
     
     public async Task<Creature> BuffExecuter(Creature player, Creature npc)
     {
-        StatusAilmentQue swapper = new StatusAilmentQue(null,null,null); 
-        while (player.GetHealth() > 0 && npc.GetHealth() > 0)
+        StatusAilmentQue swapper = new StatusAilmentQue(null,null,null);
+        await Task.Run(() =>
         {
-            if (player.StatusAilmentQues.TryDequeue(out swapper))
+            while (player.GetHealth() > 0 && npc.GetHealth() > 0)
             {
-                swapper.StatusAilment.Activate(swapper.Self,swapper.Target);
-            }
+                if (player.StatusAilmentQues.TryDequeue(out swapper))
+                {
+                    swapper.StatusAilment.Activate(swapper.Self, swapper.Target);
+                }
 
-            if (npc.StatusAilmentQues.TryDequeue(out swapper))
-            {
-                swapper.StatusAilment.Activate(swapper.Self, swapper.Target);
+                if (npc.StatusAilmentQues.TryDequeue(out swapper))
+                {
+                    swapper.StatusAilment.Activate(swapper.Self, swapper.Target);
+                }
             }
-        }
+        });
         return (npc.GetHealth() == 0 ? player : npc );
     }
     

@@ -26,6 +26,9 @@ public sealed class LevelOne
 
         Creature enemy = new Creature("Fluffy Hanekawa", 1200, true, 500, 4, 1, enemySkills,
             "catto.txt");
+
+        player.Target = enemy;
+        enemy.Target = player;
         
         BuffTasker buffTasker = new BuffTasker();
         BuffWatcher buffWatcher = new BuffWatcher();
@@ -83,19 +86,19 @@ public sealed class LevelOne
             UI.Refresh();
             mygrid.AddRow(new Markup(cat).LeftAligned(),new Markup(" ").Centered(),new Markup(player).RightAligned());
             UI.Refresh();
-            Thread.Sleep(2500);
+            Thread.Sleep(250);
             mygrid.AddRow(new Text(""), new Markup("[red]This da evilest da fluffiest catgirl whose hp is 100![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(4300);
+            Thread.Sleep(430);
             mygrid.AddRow(new Text(""), new Markup("[red]But me and my gruppies will take it on![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(3800);
+            Thread.Sleep(380);
             mygrid.AddRow(new Text(""), new Markup("[red]Guard yourself you cute monster![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(3500);
+            Thread.Sleep(350);
             mygrid.AddRow(new Text(""), new Markup("[red]CHAAAAAAAAAAAAAAAAAAAAAARGE!!![/]").Centered(), new Text(""));
             UI.Refresh();
-            Thread.Sleep(2300);
+            Thread.Sleep(230);
         });
         
         

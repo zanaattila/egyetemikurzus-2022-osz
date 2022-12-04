@@ -15,19 +15,24 @@ public sealed class SkillTasker
     /// <returns></returns>
     public async Task<Creature> SkillExecuter(Creature player, Creature npc)
     {
-        SkillQue swapper = new SkillQue(null,null,null); 
-        while (player.GetHealth() > 0 && npc.GetHealth() > 0)
+        SkillQue swapper = new SkillQue(null,null,null);
+        await Task.Run(() =>
         {
-            if (player.SkillQues.TryDequeue(out swapper))
-            {
-                swapper.Skill.CastMe(swapper.Self,swapper.Target);
-            }
 
-            if (npc.SkillQues.TryDequeue(out swapper))
+
+            while (player.GetHealth() > 0 && npc.GetHealth() > 0)
             {
-                swapper.Skill.CastMe(swapper.Self, swapper.Target);
+                if (player.SkillQues.TryDequeue(out swapper))
+                {
+                    swapper.Skill.CastMe(swapper.Self, swapper.Target);
+                }
+
+                if (npc.SkillQues.TryDequeue(out swapper))
+                {
+                    swapper.Skill.CastMe(swapper.Self, swapper.Target);
+                }
             }
-        }
+        });
         return (npc.GetHealth() == 0 ? player : npc );
     }
 }

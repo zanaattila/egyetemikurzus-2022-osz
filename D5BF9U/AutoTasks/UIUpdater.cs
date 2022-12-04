@@ -83,7 +83,7 @@ public sealed class UIUpdater
             creatureTable.AddEmptyRow();
         }
         BarChart[] creatureBarChart = CreatureBarChartMaker(creature);
-        for (int i = 0; i < creatureBarChart.Length || i < TableRows; i++)
+        for (int i = 0; i < creatureBarChart.Length && i < TableRows; i++)
         {
             creatureTable.UpdateCell(i, 0, creatureBarChart[i]);
         }
@@ -114,60 +114,63 @@ public sealed class UIUpdater
     
     public async Task<Creature> FightUI()
     {
-               
-        //player tables, right side
-
-        Table playerTable = CreatureTableMaker(Player);
-
-       
-        //error might occour with rows being blank
-
-        //npc tables, right side
-        Table npcTable = CreatureTableMaker(Npc);
-
-        
-        //GUI
-        Grid GUI = GridUserInterface();
-
-
-        Table wrapperRoot = new Table();
-        wrapperRoot.AddColumns("if you see this header rendered", "then consider it an easter egg", "cos it means i fucked up bad");
-        wrapperRoot.HideHeaders();
-
-        wrapperRoot.AddEmptyRow();
-        wrapperRoot.AddEmptyRow();
-
-        wrapperRoot.UpdateCell(0, 0, playerTable);
-        wrapperRoot.UpdateCell(0, 1, GUI);
-        wrapperRoot.UpdateCell(0, 2, npcTable);
-
-        wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
-        wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
-        wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
-
-        
-
-        AnsiConsole.Live(wrapperRoot).Start(ui =>
+        await Task.Run(() =>
         {
-            ui.Refresh();
-            while (Npc.GetHealth()> 0 && Player.GetHealth() >0 )
-            {
-                
-                wrapperRoot.UpdateCell(0, 0, CreatureTableMaker(Player));
-                wrapperRoot.UpdateCell(0, 1, GridUserInterface());
-                wrapperRoot.UpdateCell(0, 2, CreatureTableMaker(Npc));
 
-                wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
-                //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
-                wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+            //player tables, right side
+
+            Table playerTable = CreatureTableMaker(Player);
+
+
+            //error might occour with rows being blank
+
+            //npc tables, right side
+            Table npcTable = CreatureTableMaker(Npc);
+
+
+            //GUI
+            Grid GUI = GridUserInterface();
+
+
+            Table wrapperRoot = new Table();
+            wrapperRoot.AddColumns("if you see this header rendered", "then consider it an easter egg",
+                "cos it means i fucked up bad");
+            wrapperRoot.HideHeaders();
+
+            wrapperRoot.AddEmptyRow();
+            wrapperRoot.AddEmptyRow();
+
+            wrapperRoot.UpdateCell(0, 0, playerTable);
+            wrapperRoot.UpdateCell(0, 1, GUI);
+            wrapperRoot.UpdateCell(0, 2, npcTable);
+
+            wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
+            wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+            wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+
+
+            Console.WriteLine("got here");
+            AnsiConsole.Live(wrapperRoot).Start(ui =>
+            {
                 ui.Refresh();
-                Thread.Sleep(14); //to give it near 60 fps
-            }
-            
+                while (Npc.GetHealth() > 0 && Player.GetHealth() > 0)
+                {
+
+                    wrapperRoot.UpdateCell(0, 0, CreatureTableMaker(Player));
+                    wrapperRoot.UpdateCell(0, 1, GridUserInterface());
+                    wrapperRoot.UpdateCell(0, 2, CreatureTableMaker(Npc));
+
+                    wrapperRoot.UpdateCell(1, 0, CooldownBarChart(Player));
+                    //wrapperRoot.UpdateCell(1, 1, new Markup(ListPlayerSkills()));
+                    wrapperRoot.UpdateCell(1, 2, CooldownBarChart(Npc));
+                    ui.Refresh();
+                    Thread.Sleep(14); //to give it near 60 fps
+                }
+
+            });
+
+
         });
-        
-        
-        
         return (Npc.GetHealth() == 0 ? Player : Npc );
     }
 }

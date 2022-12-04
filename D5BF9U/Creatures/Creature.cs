@@ -333,36 +333,43 @@ public sealed class Creature
     {
         Random rnd = new Random();
         var skillOptions = SkillLists.Keys;
-        while (IsAutoAttacking && GetHealth()> 0 && Target.GetHealth() > 0)
+        await Task.Run(() =>
         {
-            ActionRequester(skillOptions.ElementAt(rnd.Next(skillOptions.Count)));
-            Thread.Sleep(100);
-        }
-            
+
+
+            while (IsAutoAttacking && GetHealth() > 0 && Target.GetHealth() > 0)
+            {
+                ActionRequester(skillOptions.ElementAt(rnd.Next(skillOptions.Count)));
+                Thread.Sleep(100);
+            }
+
+        });
         return GetHealth();
     }
 
     public async Task<int> ManualAttack()
     {
         int value = -1;
-        while (GetHealth() >0 && Target.GetHealth() > 0)
+        await Task.Run(() =>
         {
-            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
-            if (char.IsDigit(pressedKey.KeyChar))
+            while (GetHealth() > 0 && Target.GetHealth() > 0)
             {
-                value = int.Parse(pressedKey.KeyChar.ToString());
-            }
-            else
-            {
-                value = -1;
-            }
+                ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                if (char.IsDigit(pressedKey.KeyChar))
+                {
+                    value = int.Parse(pressedKey.KeyChar.ToString());
+                }
+                else
+                {
+                    value = -1;
+                }
 
-            if (value > 0 && value <  SkillKeysOrdered.Length+1 )
-            {
-                ActionRequester(SkillKeysOrdered[value - 1]);
+                if (value > 0 && value < SkillKeysOrdered.Length + 1)
+                {
+                    ActionRequester(SkillKeysOrdered[value - 1]);
+                }
             }
-        }
-
+        });
         return GetHealth();
     }
     
